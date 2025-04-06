@@ -1,0 +1,49 @@
+.banner {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Central container – tilted and moved down */
+.slider {
+  position: absolute;
+  top: 55%; /* Neeche shift */
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(45deg);
+  transform-style: preserve-3d;
+  animation: autoRun 20s linear infinite;
+  width: 0;
+  height: 0;
+}
+
+@keyframes autoRun {
+  from {
+    transform: translate(-50%, -50%) rotateX(35deg) rotateY(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateX(35deg) rotateY(360deg);
+  }
+}
+
+/* Cards ka size bara aur position adjust */
+.item {
+  position: absolute;
+  width: 220px; /* Pehle 200px tha */
+  height: 270px; /* Pehle 250px tha */
+  right: 0;
+  top: 50%;
+  transform-origin: right center;
+  transform: rotateY(calc(var(--position) * (360deg / var(--quantity))))
+    translateY(-50%);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
