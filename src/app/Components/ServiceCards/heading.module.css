@@ -53,11 +53,17 @@
 /* Responsive */
 @media (max-width: 768px) {
   .headerText {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Smaller font size on mobile */
   }
 
   .headingFlex {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row; /* Keep the items in the same row */
+    gap: 1rem; /* Adjust the gap between the text */
+  }
+
+  .headingItem {
+    display: flex; /* Ensure the items are displayed inline */
+    justify-content: center;
+    align-items: center;
   }
 }
