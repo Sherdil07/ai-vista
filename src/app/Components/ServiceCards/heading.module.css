@@ -1,8 +1,9 @@
-/* Heading Styles */
+/* Heading.module.css */
 .headerContentWrapper {
   position: relative;
   z-index: 2;
   padding-bottom: 3%;
+  overflow: hidden;
 }
 
 .headingWrapper {
@@ -26,44 +27,58 @@
   font-weight: 700;
   margin: 0 auto;
   width: fit-content;
+  --glow-opacity: 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, var(--glow-opacity));
+  transition: text-shadow 0.3s ease;
 }
 
 .headingFlex {
   display: flex;
   gap: 2rem;
   justify-content: center;
+  align-items: center;
 }
 
-/* Letter animation settings */
 .letter {
   display: inline-block;
-  color: rgba(255, 255, 255, 0.3);
-  transition: color 0.3s ease;
-}
-
-.aiText .letter,
-.solutionsText .letter {
   opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity, color;
 }
 
-.spacerXlarge {
-  height: 4rem;
+.aiText .letter {
+  color: rgba(255, 255, 255, 0);
 }
 
-/* Responsive */
+.solutionsText .letter {
+  color: rgba(255, 255, 255, 0);
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
+  .headingWrapper {
+    margin-bottom: 10%;
+  }
   .headerText {
-    font-size: 2.5rem; /* Smaller font size on mobile */
+    font-size: 2.5rem;
+    text-shadow: none;
   }
 
   .headingFlex {
-    flex-direction: row; /* Keep the items in the same row */
-    gap: 1rem; /* Adjust the gap between the text */
+    flex-direction: row;
+    gap: 1rem;
   }
 
-  .headingItem {
-    display: flex; /* Ensure the items are displayed inline */
-    justify-content: center;
-    align-items: center;
+  .letter {
+    transform: translateY(15px);
+  }
+}
+
+/* Animation Overrides */
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
   }
 }

@@ -8,16 +8,17 @@ import Heading from "./heading";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const splitText = (text) => {
-  return text.split("").map((char, i) => (
-    <span key={i} className={styles.letter} data-char={char}>
-      {char}
-    </span>
-  ));
-};
-
 const ServiceCards = () => {
-  const [scrollY, setScrollY] = useState(0);
+  const [flippedCards, setFlippedCards] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const services = [
     {
@@ -54,35 +55,33 @@ const ServiceCards = () => {
     },
   ];
 
+  const toggleFlip = (id) => {
+    setFlippedCards((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   useEffect(() => {
-    const setupAnimations = () => {
-      // Opacity animation for headings
-      gsap.to(`.${styles.headerText}`, {
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: `.${styles.sectionHomeService}`,
-          start: "top 80%",
-          end: "bottom 20%",
-          scrub: true,
-        },
-      });
+    gsap.to(`.${styles.headerText}`, {
+      opacity: 1,
+      duration: 1.5,
+      scrollTrigger: {
+        trigger: `.${styles.sectionHomeService}`,
+        start: "top 80%",
+        end: "bottom 20%",
+        scrub: true,
+      },
+    });
 
-      // Left to right fill animation for featuredText
-      gsap.to(`.${styles.featuredText}::before`, {
-        width: "100%",
-        duration: 2,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: `.${styles.sectionHomeService}`,
-          start: "top center",
-          end: "bottom center",
-          scrub: 1,
-        },
-      });
-    };
-
-    setupAnimations();
+    gsap.to(`.${styles.featuredText}::before`, {
+      width: "100%",
+      duration: 2,
+      ease: "power4.out",
+      scrollTrigger: {
+        trigger: `.${styles.sectionHomeService}`,
+        start: "top center",
+        end: "bottom center",
+        scrub: 1,
+      },
+    });
   }, []);
 
   return (
@@ -95,8 +94,16 @@ const ServiceCards = () => {
 
             <div className={styles.serviceComponentGrid}>
               {services.map((service) => (
-                <div key={service.id} className={styles.cardContainer}>
-                  <div className={styles.cardWrapper}>
+                <div
+                  key={service.id}
+                  className={styles.cardContainer}
+                  onClick={() => isMobile && toggleFlip(service.id)}
+                >
+                  <div
+                    className={`${styles.cardWrapper} ${
+                      flippedCards[service.id] ? styles.flipped : ""
+                    }`}
+                  >
                     <div className={styles.cardSide}>
                       <div className={styles.cardContentBlock}>
                         <img

@@ -1,179 +1,24 @@
-/* Section Styles */
-.sectionHomeService {
-  position: relative;
-  overflow: hidden;
-  background-color: black;
-  color: #ffffff;
-  padding-top: 6rem;
-}
-
-.paddingGlobal {
-  padding: 2rem;
-}
-
-.containerLarge {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.paddingSectionLarge {
-  padding: 4rem 0;
-}
-
-/* Service Cards Layout */
-.serviceComponentGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.cardContainer {
-  perspective: 1000px;
-  min-height: 400px;
-}
-
-.cardWrapper {
-  position: relative;
-  width: 100%;
+/* Base Styles */
+.buttonBg {
+  background: linear-gradient(45deg, #ff4d6d, #ff4d9e);
   height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.cardContainer:hover .cardWrapper {
-  transform: rotateY(180deg);
-}
-
-.cardSide {
+  left: 0;
   position: absolute;
+  top: 0;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-}
-
-.isBack {
-  transform: rotateY(180deg);
-  background: #111111;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.serviceIcon {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 2rem;
-}
-
-.cardTitle {
-  font-size: 2rem;
-  line-height: 1.2;
-  font-weight: 600;
-  margin: 0 0 auto 0;
-}
-
-.cardIconWrap {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 2;
-}
-
-.cardIconItem {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-.cardIconItem svg {
-  width: 24px;
-  height: 24px;
-}
-
-.cardNumber {
-  font-size: 1rem;
-  color: #00ff88;
-  margin-bottom: 1rem;
-}
-
-.cardDescription {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-}
-
-/* Button Styles */
-.buttonWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  position: relative;
-}
-
-.mainButton {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 1rem 2.5rem;
-  position: relative;
-  text-decoration: none;
-  color: white;
-  background-color: transparent;
-  border: 1px solid #ff4d6d;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.3s ease;
-}
-
-.mainButton:hover {
-  border-color: transparent;
 }
 
 .buttonBgOverflow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
   border-radius: 8px;
-  z-index: 0;
-}
-
-.buttonBg {
+  height: 100%;
+  left: 0;
+  overflow: hidden;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #ff4d6d, #ff4d9e);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  transform: translate3d(-100%, 0, 0);
-}
-
-.mainButton:hover .buttonBg {
-  transform: translate3d(0, 0, 0);
-}
-
-.buttonTextWrap {
-  position: relative;
-  z-index: 1;
+  z-index: 0;
 }
 
 .buttonText {
@@ -181,7 +26,161 @@
   z-index: 1;
 }
 
-.buttonText:nth-child(2) {
+.buttonTextWrap {
+  position: relative;
+  z-index: 1;
+}
+
+.buttonWrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.cardContainer {
+  min-height: 400px;
+  perspective: 1000px;
+}
+
+.cardDescription {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cardIconItem {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.cardIconItem svg {
+  height: 24px;
+  width: 24px;
+}
+
+.cardIconWrap {
+  bottom: 1.5rem;
+  position: absolute;
+  right: 1.5rem;
+  z-index: 2;
+}
+
+.cardNumber {
+  color: #00ff88;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cardSide {
+  backface-visibility: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+  position: absolute;
+  width: 100%;
+}
+
+.cardTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 auto 0;
+}
+
+.cardWrapper {
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  width: 100%;
+}
+
+.containerLarge {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.isBack {
+  background: #111111;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotateY(180deg);
+}
+
+.mainButton {
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #ff4d6d;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 0.8rem;
+  overflow: hidden;
+  padding: 1rem 2.5rem;
+  position: relative;
+  text-decoration: none;
+  transition: border-color 0.3s ease;
+}
+
+.paddingGlobal {
+  padding: 2rem;
+}
+
+.paddingSectionLarge {
+  padding: 4rem 0;
+}
+
+.sectionHomeService {
+  background-color: black;
+  color: #ffffff;
+  overflow: hidden;
+  padding-top: 6rem;
+  position: relative;
+}
+
+.serviceComponentGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+  z-index: 2;
+}
+
+.serviceIcon {
+  height: 60px;
+  margin-bottom: 2rem;
+  width: 60px;
+}
+
+.spacerXlarge {
+  margin: 4rem 0;
+}
+
+/* Interactive States */
+.mainButton:hover {
+  border-color: transparent;
+}
+
+.mainButton:hover .buttonBg {
+  transform: translate3d(0, 0, 0);
+}
+
+.mainButton:hover .buttonText:nth-child(1) {
   display: none;
 }
 
@@ -189,11 +188,22 @@
   display: block;
 }
 
-.mainButton:hover .buttonText:nth-child(1) {
+.buttonText:nth-child(2) {
   display: none;
 }
 
-/* Responsive Adjustments */
+/* Transformations */
+@media (hover: hover) {
+  .cardContainer:hover .cardWrapper {
+    transform: rotateY(180deg);
+  }
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .serviceComponentGrid {
     grid-template-columns: 1fr;
@@ -205,5 +215,9 @@
 
   .cardTitle {
     font-size: 1.5rem;
+  }
+
+  .cardWrapper.flipped {
+    transform: rotateY(180deg);
   }
 }

@@ -4,15 +4,13 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import styles from "./heading.module.css";
 
-// Register the GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Split the text into individual letters wrapped in <span> tags
 const splitText = (text, className = "") => {
   return text.split("").map((char, i) => (
-    <span key={i} className={`${styles.letter} ${className}`}>
+    <span key={i} className={`${styles.letter} ${className}`} data-char={char}>
       {char}
-    </span> // Corrected the missing closing tag here
+    </span>
   ));
 };
 
@@ -21,56 +19,87 @@ const Heading = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate "End-to-End" letters
-      gsap.to(`.${styles.headerText01} .${styles.letter}`, {
-        opacity: 1,
-        duration: 0.3, // Reduced duration to speed up animation
-        ease: "power2.out",
+      // Faster "End-to-End" animation with bounce effect
+      gsap.from(`.${styles.headerText01} .${styles.letter}`, {
+        y: 30,
+        opacity: 0,
+        duration: 0.4,
+        ease: "back.out(1.2)",
+        stagger: 0.03,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          scrub: 1,
+          start: "top 85%",
+          toggleActions: "play none none none",
         },
       });
 
-      // AI text animation (white) with faster speed
+      // AI text animation - faster and more vibrant
       gsap.fromTo(
         `.${styles.aiText} .${styles.letter}`,
-        { opacity: 0, color: "rgba(255,255,255,0.3)" },
+        {
+          opacity: 0,
+          y: 20,
+          color: "rgba(255,255,255,0)",
+        },
         {
           opacity: 1,
+          y: 0,
           color: "#ffffff",
-          duration: 0.3, // Speed up the animation
-          ease: "power2.out",
-          stagger: 0.03, // Faster stagger animation
+          duration: 0.35,
+          ease: "power3.out",
+          stagger: 0.02,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 1,
+            start: "top 80%",
+            toggleActions: "play none none none",
           },
         }
       );
 
-      // Solutions text animation (pink) with faster speed
+      // Solutions text animation - snappier with gradient effect
       gsap.fromTo(
         `.${styles.solutionsText} .${styles.letter}`,
-        { opacity: 0, color: "rgba(255,255,255,0.3)" },
+        {
+          opacity: 0,
+          y: 20,
+          color: "rgba(255,255,255,0)",
+        },
         {
           opacity: 1,
+          y: 0,
           color: "#ff4d6d",
-          duration: 0.3, // Speed up the animation
-          ease: "power2.out",
-          stagger: 0.03, // Faster stagger animation
+          duration: 0.35,
+          ease: "power3.out",
+          stagger: {
+            each: 0.02,
+            from: "end",
+          },
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 1,
+            start: "top 80%",
+            toggleActions: "play none none none",
           },
         }
       );
+
+      // Add a subtle glow effect on hover
+      gsap.to(`.${styles.headerText}`, {
+        "--glow-opacity": 0.8,
+        duration: 0.3,
+        paused: true,
+        ease: "sine.out",
+      });
+
+      // Set up hover effects
+      const texts = document.querySelectorAll(`.${styles.headerText}`);
+      texts.forEach((text) => {
+        text.addEventListener("mouseenter", () => {
+          gsap.to(text, { "--glow-opacity": 0.8, duration: 0.3 });
+        });
+        text.addEventListener("mouseleave", () => {
+          gsap.to(text, { "--glow-opacity": 0, duration: 0.5 });
+        });
+      });
     }, sectionRef);
 
     return () => ctx.revert();

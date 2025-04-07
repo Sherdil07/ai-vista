@@ -8,6 +8,9 @@ const Hero = () => {
     "/images/h3.webp",
     "/images/h4.webp",
     "/images/h5.webp",
+    "/images/h6.webp",
+    "/images/h7.webp",
+    "/images/h4.webp", // Added 3 more images
   ];
 
   return (
