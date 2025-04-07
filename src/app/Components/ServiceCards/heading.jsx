@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const splitText = (text, className = "") => {
   return text.split("").map((char, i) => (
-    <span key={i} className={`${styles.letter} ${className}`} data-char={char}>
+    <span key={i} className={`${styles.letter} ${className}`}>
       {char}
     </span>
   ));
@@ -19,87 +19,71 @@ const Heading = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Faster "End-to-End" animation with bounce effect
-      gsap.from(`.${styles.headerText01} .${styles.letter}`, {
-        y: 30,
-        opacity: 0,
-        duration: 0.4,
-        ease: "back.out(1.2)",
-        stagger: 0.03,
+      // Common animation settings
+      const animationSettings = {
+        duration: 0.2,
+        ease: "power2.out",
+        stagger: 0.02,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 0.5, // Smooth scrubbing instead of toggle
+          toggleActions: "play reverse play reverse", // Plays forward and reverses
         },
-      });
+      };
 
-      // AI text animation - faster and more vibrant
+      // "End-to-End" letters
       gsap.fromTo(
-        `.${styles.aiText} .${styles.letter}`,
-        {
-          opacity: 0,
-          y: 20,
-          color: "rgba(255,255,255,0)",
-        },
+        `.${styles.headerText01} .${styles.letter}`,
+        { opacity: 0 },
         {
           opacity: 1,
-          y: 0,
+          ...animationSettings,
+        }
+      );
+
+      // AI text animation
+      gsap.fromTo(
+        `.${styles.aiText} .${styles.letter}`,
+        { opacity: 0, color: "rgba(255,255,255,0.3)" },
+        {
+          opacity: 1,
           color: "#ffffff",
-          duration: 0.35,
-          ease: "power3.out",
+          ...animationSettings,
+        }
+      );
+
+      // Solutions text animation with slight delay
+      gsap.fromTo(
+        `.${styles.solutionsText} .${styles.letter}`,
+        { opacity: 0, color: "rgba(255,255,255,0.3)" },
+        {
+          opacity: 1,
+          color: "#ff4d6d",
+          ...animationSettings,
+          delay: 0.1,
+        }
+      );
+
+      // Scale animation with proper reset
+      gsap.fromTo(
+        `.${styles.headerText} .${styles.letter}`,
+        { scale: 0.9 },
+        {
+          scale: 1,
+          duration: 0.3,
+          ease: "back.out(1.7)",
           stagger: 0.02,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
+            start: "top 85%",
+            end: "top 50%",
+            scrub: 0.5,
+            toggleActions: "play reverse play reverse",
           },
         }
       );
-
-      // Solutions text animation - snappier with gradient effect
-      gsap.fromTo(
-        `.${styles.solutionsText} .${styles.letter}`,
-        {
-          opacity: 0,
-          y: 20,
-          color: "rgba(255,255,255,0)",
-        },
-        {
-          opacity: 1,
-          y: 0,
-          color: "#ff4d6d",
-          duration: 0.35,
-          ease: "power3.out",
-          stagger: {
-            each: 0.02,
-            from: "end",
-          },
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-
-      // Add a subtle glow effect on hover
-      gsap.to(`.${styles.headerText}`, {
-        "--glow-opacity": 0.8,
-        duration: 0.3,
-        paused: true,
-        ease: "sine.out",
-      });
-
-      // Set up hover effects
-      const texts = document.querySelectorAll(`.${styles.headerText}`);
-      texts.forEach((text) => {
-        text.addEventListener("mouseenter", () => {
-          gsap.to(text, { "--glow-opacity": 0.8, duration: 0.3 });
-        });
-        text.addEventListener("mouseleave", () => {
-          gsap.to(text, { "--glow-opacity": 0, duration: 0.5 });
-        });
-      });
     }, sectionRef);
 
     return () => ctx.revert();
