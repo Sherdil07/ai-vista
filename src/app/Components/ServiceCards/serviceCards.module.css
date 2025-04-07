@@ -32,9 +32,21 @@
 .cardContainer {
   perspective: 1000px;
   min-height: 400px;
-  cursor: pointer;
 }
 
+/* Remove the hover-based flip */
+/* .cardContainer:hover .cardWrapper {
+  transform: rotateY(180deg);
+} */
+
+/* Add mobile hover prevention */
+@media (hover: none) {
+  .cardContainer:hover .cardWrapper {
+    transform: none !important;
+  }
+}
+
+/* Keep existing transition */
 .cardWrapper {
   position: relative;
   width: 100%;
@@ -43,13 +55,7 @@
   transform-style: preserve-3d;
 }
 
-@media (min-width: 769px) {
-  .cardContainer:hover .cardWrapper {
-    transform: rotateY(180deg);
-  }
-}
-
-.cardContainer.isFlipped .cardWrapper {
+.cardContainer:hover .cardWrapper {
   transform: rotateY(180deg);
 }
 
@@ -212,9 +218,5 @@
 
   .cardTitle {
     font-size: 1.5rem;
-  }
-
-  .cardContainer:hover .cardWrapper {
-    transform: none;
   }
 }

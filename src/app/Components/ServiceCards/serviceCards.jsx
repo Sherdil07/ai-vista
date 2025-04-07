@@ -17,16 +17,8 @@ const splitText = (text) => {
 };
 
 const ServiceCards = () => {
-  const [flippedCards, setFlippedCards] = useState({});
-
-  const toggleCard = (id) => {
-    if (window.matchMedia("(max-width: 768px)").matches) {
-      setFlippedCards((prev) => ({
-        ...prev,
-        [id]: !prev[id],
-      }));
-    }
-  };
+  const [flippedCards, setFlippedCards] = useState(new Set());
+  const [scrollY, setScrollY] = useState(0);
 
   const services = [
     {
@@ -63,8 +55,15 @@ const ServiceCards = () => {
     },
   ];
 
+  const toggleFlip = (id) => {
+    const newFlipped = new Set(flippedCards);
+    newFlipped.has(id) ? newFlipped.delete(id) : newFlipped.add(id);
+    setFlippedCards(newFlipped);
+  };
+
   useEffect(() => {
     const setupAnimations = () => {
+      // Opacity animation for headings
       gsap.to(`.${styles.headerText}`, {
         opacity: 1,
         duration: 1.5,
@@ -76,6 +75,7 @@ const ServiceCards = () => {
         },
       });
 
+      // Left to right fill animation for featuredText
       gsap.to(`.${styles.featuredText}::before`, {
         width: "100%",
         duration: 2,
@@ -104,12 +104,18 @@ const ServiceCards = () => {
               {services.map((service) => (
                 <div
                   key={service.id}
-                  className={`${styles.cardContainer} ${
-                    flippedCards[service.id] ? styles.isFlipped : ""
-                  }`}
-                  onClick={() => toggleCard(service.id)}
+                  className={styles.cardContainer}
+                  onClick={() => toggleFlip(service.id)}
                 >
-                  <div className={styles.cardWrapper}>
+                  <div
+                    className={styles.cardWrapper}
+                    style={{
+                      transform: flippedCards.has(service.id)
+                        ? "rotateY(180deg)"
+                        : "none",
+                    }}
+                  >
+                    {/* Front Card Content */}
                     <div className={styles.cardSide}>
                       <div className={styles.cardContentBlock}>
                         <img
@@ -140,6 +146,7 @@ const ServiceCards = () => {
                       </div>
                     </div>
 
+                    {/* Back Card Content */}
                     <div className={`${styles.cardSide} ${styles.isBack}`}>
                       <div className={styles.cardContentBlock}>
                         <div className={styles.cardNumber}>
