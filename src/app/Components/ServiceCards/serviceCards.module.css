@@ -34,19 +34,14 @@
   min-height: 400px;
 }
 
-/* Mobile: Flip on click */
+/* Mobile: No flip effect */
 @media (max-width: 768px) {
-  .cardWrapper {
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-  }
-
   .cardContainer:hover .cardWrapper {
     transform: none !important;
   }
 }
 
-/* Laptop and up: Flip on hover */
+/* Laptop and up: Flip effect on hover */
 @media (min-width: 769px) {
   .cardContainer:hover .cardWrapper {
     transform: rotateY(180deg);
