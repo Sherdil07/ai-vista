@@ -56,9 +56,9 @@
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  .headingWrapper {
+  /* .headingWrapper {
     margin-bottom: 10%;
-  }
+  } */
   .headerText {
     font-size: 2.5rem;
     text-shadow: none;
