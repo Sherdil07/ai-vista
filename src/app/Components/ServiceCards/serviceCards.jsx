@@ -1,24 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import styles from "./serviceCards.module.css";
+import { useState, useEffect, useRef } from "react";
+import { WrenchScrewdriverIcon } from "@heroicons/react/20/solid";
 import Heading from "./heading";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const splitText = (text) => {
-  return text.split("").map((char, i) => (
-    <span key={i} className={styles.letter} data-char={char}>
-      {char}
-    </span>
-  ));
-};
-
 const ServiceCards = () => {
-  const [flippedCards, setFlippedCards] = useState(new Set());
-  const [scrollY, setScrollY] = useState(0);
+  const [flippedCards, setFlippedCards] = useState(Array(4).fill(false));
+  const sectionRef = useRef(null);
 
   const services = [
     {
@@ -55,141 +43,122 @@ const ServiceCards = () => {
     },
   ];
 
-  const toggleFlip = (id) => {
-    const newFlipped = new Set(flippedCards);
-    newFlipped.has(id) ? newFlipped.delete(id) : newFlipped.add(id);
+  const handleFlip = (index) => {
+    const newFlipped = [...flippedCards];
+    newFlipped[index] = !newFlipped[index];
     setFlippedCards(newFlipped);
   };
 
   useEffect(() => {
     const setupAnimations = () => {
-      // Opacity animation for headings
-      gsap.to(`.${styles.headerText}`, {
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-          trigger: `.${styles.sectionHomeService}`,
-          start: "top 80%",
-          end: "bottom 20%",
-          scrub: true,
-        },
-      });
-
-      // Left to right fill animation for featuredText
-      gsap.to(`.${styles.featuredText}::before`, {
-        width: "100%",
-        duration: 2,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: `.${styles.sectionHomeService}`,
-          start: "top center",
-          end: "bottom center",
-          scrub: 1,
-        },
-      });
+      // Setup animations for the section header, if necessary
     };
-
     setupAnimations();
   }, []);
 
   return (
-    <section className={styles.sectionHomeService}>
-      <div className={styles.paddingGlobal}>
-        <div className={styles.containerLarge}>
-          <div className={styles.paddingSectionLarge}>
-            <div className={styles.spacerXlarge} />
-            <Heading />
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-black text-white py-24"
+    >
+      <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
+        <div className="pb-16">
+          <Heading />
 
-            <div className={styles.serviceComponentGrid}>
-              {services.map((service) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+            {services.map((service, index) => (
+              <div
+                key={service.id}
+                className="perspective-1000 min-h-[350px] max-h-[450px] cursor-pointer" // Reduced height and adjusted max-height
+                onClick={() => handleFlip(index)}
+              >
                 <div
-                  key={service.id}
-                  className={styles.cardContainer}
-                  onClick={() => toggleFlip(service.id)}
+                  className={`relative w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform-style-preserve-3d ${
+                    flippedCards[index] ? "rotate-y-180" : ""
+                  }`}
                 >
-                  <div
-                    className={styles.cardWrapper}
-                    style={{
-                      transform: flippedCards.has(service.id)
-                        ? "rotateY(180deg)"
-                        : "none",
-                    }}
-                  >
-                    {/* Front Card Content */}
-                    <div className={styles.cardSide}>
-                      <div className={styles.cardContentBlock}>
-                        <img
-                          src={service.icon}
-                          alt={`Service Icon - ${service.title}`}
-                          className={styles.serviceIcon}
-                          loading="lazy"
-                        />
-                        <h2 className={styles.cardTitle}>
-                          {service.title.split("\n").map((line, i) => (
-                            <span key={i}>
-                              {line}
-                              <br />
-                            </span>
-                          ))}
-                        </h2>
-                      </div>
-                      <div className={styles.cardIconWrap}>
-                        <div className={styles.cardIconItem}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M18.1716 6.99955H11C7.68629 6.99955 5 9.68584 5 12.9996C5 16.3133 7.68629 18.9996 11 18.9996H20V20.9996H11C6.58172 20.9996 3 17.4178 3 12.9996C3 8.58127 6.58172 4.99955 11 4.99955H18.1716L15.636 2.46402L17.0503 1.0498L22 5.99955L17.0503 10.9493L15.636 9.53509L18.1716 6.99955Z" />
-                          </svg>
-                        </div>
+                  {/* Front Card */}
+                  <div className="absolute w-full h-full backface-hidden rounded-xl p-8 bg-white/5 border border-white/10 flex flex-col justify-between">
+                    <div>
+                      <img
+                        src={service.icon}
+                        alt={service.title}
+                        className="w-15 h-15 mb-8"
+                        loading="lazy"
+                      />
+                      <h2 className="text-2xl font-semibold leading-tight whitespace-pre-line">
+                        {service.title}
+                      </h2>
+                    </div>
+                    <div className="absolute bottom-6 right-6 z-10">
+                      <div className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg">
+                        <svg
+                          className="w-6 h-6"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M18.1716 6.99955H11C7.68629 6.99955 5 9.68584 5 12.9996C5 16.3133 7.68629 18.9996 11 18.9996H20V20.9996H11C6.58172 20.9996 3 17.4178 3 12.9996C3 8.58127 6.58172 4.99955 11 4.99955H18.1716L15.636 2.46402L17.0503 1.0498L22 5.99955L17.0503 10.9493L15.636 9.53509L18.1716 6.99955Z" />
+                        </svg>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Back Card Content */}
-                    <div className={`${styles.cardSide} ${styles.isBack}`}>
-                      <div className={styles.cardContentBlock}>
-                        <div className={styles.cardNumber}>
-                          {service.number}
-                        </div>
-                        <p className={styles.cardDescription}>
-                          {service.description}
-                        </p>
-                      </div>
-                      <div className={styles.cardIconWrap}>
-                        <div className={styles.cardIconItem}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M5.82843 6.99955L8.36396 9.53509L6.94975 10.9493L2 5.99955L6.94975 1.0498L8.36396 2.46402L5.82843 4.99955H13C17.4183 4.99955 21 8.58127 21 12.9996C21 17.4178 17.4183 20.9996 13 20.9996H4V18.9996H13C16.3137 18.9996 19 16.3133 19 12.9996C19 9.68584 16.3137 6.99955 13 6.99955H5.82843Z" />
-                          </svg>
-                        </div>
+                  {/* Back Card */}
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 rounded-xl p-8 bg-white/5 border border-white/10 flex flex-col justify-between">
+                    <div>
+                      <p className="text-sm text-emerald-400 mb-4">
+                        {service.number}
+                      </p>
+                      <p className="text-base leading-relaxed text-gray-300">
+                        {service.description}
+                      </p>
+                    </div>
+                    <div className="absolute bottom-6 right-6 z-10">
+                      <div className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg">
+                        <svg
+                          className="w-6 h-6"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M5.82843 6.99955L8.36396 9.53509L6.94975 10.9493L2 5.99955L6.94975 1.0498L8.36396 2.46402L5.82843 4.99955H13C17.4183 4.99955 21 8.58127 21 12.9996C21 17.4178 17.4183 20.9996 13 20.9996H4V18.9996H13C16.3137 18.9996 19 16.3133 19 12.9996C19 9.68584 16.3137 6.99955 13 6.99955H5.82843Z" />
+                        </svg>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
 
-            <div className={styles.spacerXlarge} />
-
-            <div className={styles.buttonWrapper}>
-              <Link href="/services" className={styles.mainButton}>
-                <div className={styles.buttonIconBlock}></div>
-                <div className={styles.buttonTextWrap}>
-                  <div className={styles.buttonText}>All Services</div>
-                  <div className={styles.buttonText}>All Services</div>
-                </div>
-                <div className={styles.buttonBgOverflow}>
-                  <div className={styles.buttonBg} />
-                </div>
-              </Link>
-            </div>
+          <div className="mt-16 flex justify-center">
+            <Link
+              href="/services"
+              className="relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border border-rose-400 rounded-lg group hover:border-transparent"
+            >
+              <span className="relative z-10">All Services</span>
+              <div className="absolute inset-0 w-full h-full -translate-x-full bg-gradient-to-r from-rose-500 to-rose-300 transition-transform duration-500 group-hover:translate-x-0" />
+            </Link>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .transform-style-preserve-3d {
+          transform-style: preserve-3d;
+        }
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+        /* Hover effect for large screens */
+        @media (min-width: 768px) {
+          .perspective-1000:hover .relative {
+            transform: rotateY(180deg);
+          }
+        }
+      `}</style>
     </section>
   );
 };
