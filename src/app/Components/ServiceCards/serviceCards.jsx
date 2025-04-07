@@ -8,17 +8,25 @@ import Heading from "./heading";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const splitText = (text) => {
+  return text.split("").map((char, i) => (
+    <span key={i} className={styles.letter} data-char={char}>
+      {char}
+    </span>
+  ));
+};
+
 const ServiceCards = () => {
   const [flippedCards, setFlippedCards] = useState({});
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Mobile detection
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const toggleCard = (id) => {
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      setFlippedCards((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+      }));
+    }
+  };
 
   const services = [
     {
@@ -55,33 +63,33 @@ const ServiceCards = () => {
     },
   ];
 
-  const toggleFlip = (id) => {
-    setFlippedCards((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
   useEffect(() => {
-    gsap.to(`.${styles.headerText}`, {
-      opacity: 1,
-      duration: 1.5,
-      scrollTrigger: {
-        trigger: `.${styles.sectionHomeService}`,
-        start: "top 80%",
-        end: "bottom 20%",
-        scrub: true,
-      },
-    });
+    const setupAnimations = () => {
+      gsap.to(`.${styles.headerText}`, {
+        opacity: 1,
+        duration: 1.5,
+        scrollTrigger: {
+          trigger: `.${styles.sectionHomeService}`,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: true,
+        },
+      });
 
-    gsap.to(`.${styles.featuredText}::before`, {
-      width: "100%",
-      duration: 2,
-      ease: "power4.out",
-      scrollTrigger: {
-        trigger: `.${styles.sectionHomeService}`,
-        start: "top center",
-        end: "bottom center",
-        scrub: 1,
-      },
-    });
+      gsap.to(`.${styles.featuredText}::before`, {
+        width: "100%",
+        duration: 2,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: `.${styles.sectionHomeService}`,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        },
+      });
+    };
+
+    setupAnimations();
   }, []);
 
   return (
@@ -96,14 +104,12 @@ const ServiceCards = () => {
               {services.map((service) => (
                 <div
                   key={service.id}
-                  className={styles.cardContainer}
-                  onClick={() => isMobile && toggleFlip(service.id)}
+                  className={`${styles.cardContainer} ${
+                    flippedCards[service.id] ? styles.isFlipped : ""
+                  }`}
+                  onClick={() => toggleCard(service.id)}
                 >
-                  <div
-                    className={`${styles.cardWrapper} ${
-                      flippedCards[service.id] ? styles.flipped : ""
-                    }`}
-                  >
+                  <div className={styles.cardWrapper}>
                     <div className={styles.cardSide}>
                       <div className={styles.cardContentBlock}>
                         <img
