@@ -18,7 +18,18 @@ const splitText = (text) => {
 
 const ServiceCards = () => {
   const [flippedCards, setFlippedCards] = useState(new Set());
-  const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Add mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const services = [
     {
@@ -56,6 +67,7 @@ const ServiceCards = () => {
   ];
 
   const toggleFlip = (id) => {
+    if (!isMobile) return; // Only allow toggle on mobile
     const newFlipped = new Set(flippedCards);
     newFlipped.has(id) ? newFlipped.delete(id) : newFlipped.add(id);
     setFlippedCards(newFlipped);
@@ -63,7 +75,6 @@ const ServiceCards = () => {
 
   useEffect(() => {
     const setupAnimations = () => {
-      // Opacity animation for headings
       gsap.to(`.${styles.headerText}`, {
         opacity: 1,
         duration: 1.5,
@@ -75,7 +86,6 @@ const ServiceCards = () => {
         },
       });
 
-      // Left to right fill animation for featuredText
       gsap.to(`.${styles.featuredText}::before`, {
         width: "100%",
         duration: 2,
@@ -109,11 +119,15 @@ const ServiceCards = () => {
                 >
                   <div
                     className={styles.cardWrapper}
-                    style={{
-                      transform: flippedCards.has(service.id)
-                        ? "rotateY(180deg)"
-                        : "none",
-                    }}
+                    style={
+                      isMobile
+                        ? {
+                            transform: flippedCards.has(service.id)
+                              ? "rotateY(180deg)"
+                              : "none",
+                          }
+                        : {}
+                    }
                   >
                     {/* Front Card Content */}
                     <div className={styles.cardSide}>
