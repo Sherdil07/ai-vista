@@ -80,6 +80,13 @@ const Navbar = () => {
     },
   };
 
+  // Prevent default behavior for anchor links
+  const handleLinkClick = (e) => {
+    e.preventDefault(); // Prevent the page refresh
+    const href = e.target.getAttribute("href");
+    window.location.href = href; // Use JavaScript to navigate without reloading
+  };
+
   return (
     <nav className="bg-black backdrop-blur-lg  border-gray-100 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,6 +114,7 @@ const Navbar = () => {
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleLinkClick} // Add onClick handler to prevent page reload
               >
                 {item.name}
                 <motion.div
@@ -129,7 +137,7 @@ const Navbar = () => {
 
           {/* Animated Toggle Button */}
           <motion.button
-            className="md:hidden p-3 rounded-xl  relative"
+            className="md:hidden p-3 rounded-xl relative"
             onClick={() => setIsOpen(!isOpen)}
             variants={toggleVariants}
             animate={isOpen ? "open" : "closed"}
@@ -185,6 +193,7 @@ const Navbar = () => {
                       type: "spring",
                       stiffness: 300,
                     }}
+                    onClick={handleLinkClick} // Add onClick handler to prevent page reload
                   >
                     {item.name}
                   </motion.a>
