@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Ensure menu is closed on page load or refresh
   useEffect(() => {
     setIsOpen(false); // Menu will be closed by default on page load/refresh
   }, []);
@@ -22,11 +21,11 @@ const Navbar = () => {
   const toggleVariants = {
     open: {
       rotate: 180,
-      transition: { duration: 0.3 },
+      transition: { duration: 0.8, ease: "easeInOut" },
     },
     closed: {
       rotate: 0,
-      transition: { duration: 0.3 },
+      transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
 
@@ -36,18 +35,53 @@ const Navbar = () => {
       opacity: custom < 3 ? 1 : 0, // Only show the first 3 dots when open
       x: custom === 0 ? -8 : custom === 1 ? 0 : 8, // Arrange first 3 dots horizontally
       y: 0, // Keep them horizontally aligned
-      transition: { type: "spring", stiffness: 300, damping: 20 },
+      transition: { type: "spring", stiffness: 300, damping: 25 },
     }),
     closed: (custom) => ({
       opacity: 1,
       x: (custom % 3) * 16 - 16,
       y: Math.floor(custom / 3) * 16 - 16,
-      transition: { type: "spring", stiffness: 300, damping: 20 },
+      transition: { type: "spring", stiffness: 300, damping: 25 },
     }),
   };
 
+  // Menu animation variants (including height adjustment)
+  const menuVariants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      height: "auto", // Set the height to auto when open
+      transition: {
+        duration: 0.8, // Slower slide-in transition
+        ease: "easeOut",
+        type: "spring",
+        stiffness: 120,
+      },
+    },
+    closed: {
+      opacity: 0,
+      y: -100,
+      height: 0, // Collapse the menu height to 0 when closed
+      transition: { duration: 0.6, ease: "easeInOut" }, // Smooth exit transition
+    },
+  };
+
+  // List item animation variants
+  const itemVariants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 300, damping: 30 },
+    },
+    closed: {
+      opacity: 0,
+      y: 20,
+      transition: { ease: "easeOut", duration: 0.6 }, // Smooth exit for list items
+    },
+  };
+
   return (
-    <nav className="bg-black backdrop-blur-lg border-b border-gray-100 w-full">
+    <nav className="bg-black backdrop-blur-lg  border-gray-100 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
@@ -95,7 +129,7 @@ const Navbar = () => {
 
           {/* Animated Toggle Button */}
           <motion.button
-            className="md:hidden p-3 rounded-xl hover:bg-gray-50 relative"
+            className="md:hidden p-3 rounded-xl  relative"
             onClick={() => setIsOpen(!isOpen)}
             variants={toggleVariants}
             animate={isOpen ? "open" : "closed"}
@@ -125,10 +159,10 @@ const Navbar = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
               className="md:hidden bg-black backdrop-blur-lg shadow-xl rounded-lg mx-4 mt-2"
             >
               <motion.div
@@ -142,9 +176,10 @@ const Navbar = () => {
                     key={item.name}
                     href={item.href}
                     className="block py-3 px-4 rounded-lg hover:bg-blue-50 text-white hover:text-blue-600"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    variants={itemVariants}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
                     transition={{
                       delay: index * 0.05,
                       type: "spring",
