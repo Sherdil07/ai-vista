@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setIsOpen(false); // Menu will be closed by default on page load/refresh
+    setIsOpen(false);
   }, []);
 
   const navItems = [
@@ -21,48 +21,49 @@ const Navbar = () => {
   const toggleVariants = {
     open: {
       rotate: 180,
-      transition: { duration: 0.8, ease: "easeInOut" },
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
     },
     closed: {
       rotate: 0,
-      transition: { duration: 0.8, ease: "easeInOut" },
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
     },
   };
 
   // Dot animation variants
   const dotVariants = {
     open: (custom) => ({
-      opacity: custom < 3 ? 1 : 0, // Only show the first 3 dots when open
-      x: custom === 0 ? -8 : custom === 1 ? 0 : 8, // Arrange first 3 dots horizontally
-      y: 0, // Keep them horizontally aligned
-      transition: { type: "spring", stiffness: 300, damping: 25 },
+      opacity: custom < 3 ? 1 : 0,
+      x: custom === 0 ? -8 : custom === 1 ? 0 : 8,
+      y: 0,
+      transition: { type: "spring", stiffness: 400, damping: 20 },
     }),
     closed: (custom) => ({
       opacity: 1,
       x: (custom % 3) * 16 - 16,
       y: Math.floor(custom / 3) * 16 - 16,
-      transition: { type: "spring", stiffness: 300, damping: 25 },
+      transition: { type: "spring", stiffness: 400, damping: 20 },
     }),
   };
 
-  // Menu animation variants (including height adjustment)
+  // Menu animation variants
   const menuVariants = {
     open: {
       opacity: 1,
       y: 0,
-      height: "auto", // Set the height to auto when open
+      height: "auto",
       transition: {
-        duration: 0.8, // Slower slide-in transition
-        ease: "easeOut",
-        type: "spring",
-        stiffness: 120,
+        duration: 0.5,
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     closed: {
       opacity: 0,
-      y: -100,
-      height: 0, // Collapse the menu height to 0 when closed
-      transition: { duration: 0.6, ease: "easeInOut" }, // Smooth exit transition
+      y: -20,
+      height: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.4, 0, 0.2, 1],
+      },
     },
   };
 
@@ -71,24 +72,24 @@ const Navbar = () => {
     open: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 },
+      transition: { duration: 0.3, ease: "easeOut" },
     },
     closed: {
       opacity: 0,
-      y: 20,
-      transition: { ease: "easeOut", duration: 0.6 }, // Smooth exit for list items
+      y: 10,
+      transition: { duration: 0.2, ease: "easeIn" },
     },
   };
 
-  // Prevent default behavior for anchor links
   const handleLinkClick = (e) => {
-    e.preventDefault(); // Prevent the page refresh
+    e.preventDefault();
     const href = e.target.getAttribute("href");
-    window.location.href = href; // Use JavaScript to navigate without reloading
+    setIsOpen(false);
+    window.location.href = href;
   };
 
   return (
-    <nav className="bg-black backdrop-blur-lg  border-gray-100 w-full">
+    <nav className="bg-black backdrop-blur-lg border-gray-100 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           {/* Logo */}
@@ -114,7 +115,7 @@ const Navbar = () => {
                   transition: { duration: 0.2 },
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleLinkClick} // Add onClick handler to prevent page reload
+                onClick={handleLinkClick}
               >
                 {item.name}
                 <motion.div
@@ -135,7 +136,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Animated Toggle Button */}
+          {/* Mobile Toggle Button */}
           <motion.button
             className="md:hidden p-3 rounded-xl relative"
             onClick={() => setIsOpen(!isOpen)}
@@ -171,13 +172,13 @@ const Navbar = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="md:hidden bg-black backdrop-blur-lg shadow-xl rounded-lg mx-4 mt-2"
+              className="md:hidden bg-black backdrop-blur-lg shadow-xl rounded-lg mx-4 mt-2 overflow-hidden"
             >
               <motion.div
+                className="px-4 pt-4 pb-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className="px-4 pt-4 pb-6"
+                exit={{ opacity: 0 }}
               >
                 {navItems.map((item, index) => (
                   <motion.a
@@ -185,15 +186,7 @@ const Navbar = () => {
                     href={item.href}
                     className="block py-3 px-4 rounded-lg hover:bg-blue-50 text-white hover:text-blue-600"
                     variants={itemVariants}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{
-                      delay: index * 0.05,
-                      type: "spring",
-                      stiffness: 300,
-                    }}
-                    onClick={handleLinkClick} // Add onClick handler to prevent page reload
+                    onClick={handleLinkClick}
                   >
                     {item.name}
                   </motion.a>
