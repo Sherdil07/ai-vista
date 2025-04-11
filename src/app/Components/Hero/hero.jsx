@@ -16,7 +16,7 @@ const Hero = () => {
   return (
     <div className={styles.banner}>
       {/* Headings */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 text-center z-50 w-full">
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 text-center  w-full">
         <h1 className="text-5xl font-bold text-white mb-4">
           UNLOCK THE FUTURE
         </h1>
