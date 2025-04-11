@@ -20,7 +20,7 @@ const Hero = () => {
         <h1 className="text-5xl font-bold text-white mb-4">
           UNLOCK THE FUTURE
         </h1>
-        <h2 className="text-4xl italic text-pink-500">With AI</h2>
+        <h2 className="text-4xl italic text-[#00A8A8]">With AI</h2>
       </div>
 
       {/* Zero-sized central container acting as the rotation axis */}

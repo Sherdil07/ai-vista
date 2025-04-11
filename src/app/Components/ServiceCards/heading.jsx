@@ -60,7 +60,7 @@ const Heading = () => {
         { opacity: 0, color: "rgba(255,255,255,0.3)" },
         {
           opacity: 1,
-          color: "#ff4d6d",
+          color: "#00A8A8",
           ...animationSettings,
           delay: 0.1,
         }

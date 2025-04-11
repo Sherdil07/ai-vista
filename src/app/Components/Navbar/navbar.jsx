@@ -236,7 +236,7 @@ const Navbar = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <Link href="/">
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-white to-[#00A8A8] bg-clip-text text-transparent">
                   Logo
                 </span>
               </Link>
@@ -299,7 +299,7 @@ const Navbar = () => {
                 initial="initial"
                 animate="enter"
                 exit="exit"
-                className="md:hidden fixed top-0 left-0 right-0 z-40 w-full min-h-screen flex flex-col bg-gradient-to-r from-black to-blue-900"
+                className="md:hidden fixed top-0 left-0 right-0 z-40 w-full min-h-screen flex flex-col bg-gradient-to-r from-black to-[#00A8A8]"
                 style={{ backgroundColor: "rgba(0,0,0,0.98)" }} // Ensure high opacity
               >
                 {/* Add an overlay to ensure complete coverage */}
@@ -307,7 +307,7 @@ const Navbar = () => {
 
                 <div className="w-full flex justify-between items-center h-20 border-b border-[#ffffff33] px-6 relative z-10">
                   <Link href="/">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-white to-[#00A8A8] bg-clip-text text-transparent">
                       Logo
                     </span>
                   </Link>
@@ -374,7 +374,7 @@ const Navbar = () => {
             variants={pageTransition}
             initial="initial"
             animate={isExiting ? "exit" : "animate"}
-            className="fixed inset-0 w-full h-full z-[100] bg-gradient-to-r from-black to-blue-900 flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 w-full h-full z-[100] bg-gradient-to-r from-black to-[#00A8A8] flex items-center justify-center overflow-hidden"
           >
             {/* Wave overlay for added dimension */}
             <motion.div
