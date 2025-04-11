@@ -155,15 +155,15 @@ const Navbar = () => {
     },
   };
 
-  // Button container rotation animation
+  // Button container rotation animation - UPDATED with rotation
   const buttonContainerVariants = {
     open: {
-      rotate: 0, // Keep it straight when open to display horizontal dots
-      transition: { duration: 0.5, ease: [0.32, 0.72, 0, 1] },
+      rotate: 180, // Rotate 180 degrees when opening
+      transition: { duration: 0.7, ease: [0.32, 0.72, 0, 1] },
     },
     closed: {
       rotate: 0,
-      transition: { duration: 0.5, ease: [0.32, 0.72, 0, 1] },
+      transition: { duration: 0.7, ease: [0.32, 0.72, 0, 1] },
     },
   };
 
@@ -257,150 +257,36 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Mobile Toggle Button with horizontal dots transition */}
+            {/* Mobile Toggle Button with rotating dots animation */}
             <motion.button
               className="md:hidden p-3 rounded-xl relative z-50"
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Keep the dot container straight for better horizontal dots display */}
+              {/* Container for dots with rotation animation */}
               <motion.div
                 className="w-8 h-8 relative"
                 variants={buttonContainerVariants}
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
               >
-                {/* Middle row dots (for horizontal ellipsis effect) */}
-                <motion.span
-                  key="dot1"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={3}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot2"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={4}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot3"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={5}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-
-                {/* Top row dots (for grid effect when closed) */}
-                <motion.span
-                  key="dot4"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={0}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot5"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={1}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot6"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={2}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-
-                {/* Bottom row dots (for grid effect when closed) */}
-                <motion.span
-                  key="dot7"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={6}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot8"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={7}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
-                <motion.span
-                  key="dot9"
-                  className="absolute w-1.5 h-1.5 bg-white rounded-full"
-                  custom={8}
-                  variants={dotVariants}
-                  initial="closed"
-                  animate={isOpen ? "open" : "closed"}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "-0.1875rem",
-                    marginTop: "-0.1875rem",
-                  }}
-                />
+                {/* All 9 dots using array mapping for cleaner code */}
+                {[...Array(9)].map((_, i) => (
+                  <motion.span
+                    key={`dot-${i}`}
+                    className="absolute w-1.5 h-1.5 bg-white rounded-full"
+                    custom={i}
+                    variants={dotVariants}
+                    initial="closed"
+                    animate={isOpen ? "open" : "closed"}
+                    style={{
+                      left: "50%",
+                      top: "50%",
+                      marginLeft: "-0.1875rem",
+                      marginTop: "-0.1875rem",
+                    }}
+                  />
+                ))}
               </motion.div>
             </motion.button>
           </div>
