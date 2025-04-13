@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { WrenchScrewdriverIcon } from "@heroicons/react/20/solid";
 import Heading from "./heading";
+import Image from "next/image";
 
 const ServiceCards = () => {
   const [flippedCards, setFlippedCards] = useState(Array(4).fill(false));
@@ -12,31 +13,31 @@ const ServiceCards = () => {
     {
       id: 1,
       title: "Machine\nLearning",
-      icon: "https://cdn.prod.website-files.com/66d39c6cae70a65d79022708/66e45429520db7856681bb20_icon-01.svg",
+      icon: "/images/Vector.svg",
       number: "#01",
       description:
         "Develop predictive models and automate decision-making processes with custom machine learning algorithms that learn from your data.",
     },
     {
       id: 2,
-      title: "Computer\nVision",
-      icon: "https://cdn.prod.website-files.com/66d39c6cae70a65d79022708/66e458c1d8cfb7270742cb23_icon-02.svg",
+      title: "Web\nDevelopment",
+      icon: "/images/Black.svg",
       number: "#02",
       description:
         "Leverage image and video analysis to automate visual inspection, enhance security, or provide innovative customer experiences through facial recognition, object detection, and more.",
     },
     {
       id: 3,
-      title: "AI-Powered\nAnalytics",
-      icon: "https://cdn.prod.website-files.com/66d39c6cae70a65d79022708/66e458c120f7c47f0b8d2332_icon-03.svg",
+      title: "App\nDevelopment",
+      icon: "/images/app.svg",
       number: "#03",
       description:
         "Transform raw data into actionable insights with AI-driven analytics that identify patterns, trends, and anomalies in your data, improving strategic decision-making.",
     },
     {
       id: 4,
-      title: "AI\nConsultation",
-      icon: "https://cdn.prod.website-files.com/66d39c6cae70a65d79022708/66e458c13e46cb50aceb4d49_icon-04.svg",
+      title: "Digital\nMarketing",
+      icon: "/images/digital.svg",
       number: "#04",
       description:
         "Work with our AI consultants to develop a strategic roadmap tailored to your organization's unique needs, from AI readiness assessment to full-scale AI implementation.",
@@ -59,7 +60,7 @@ const ServiceCards = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-black text-white py-24"
+      className="relative overflow-hidden bg-black text-white py-24 pt-2"
     >
       <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
         <div className="pb-16">
@@ -80,12 +81,15 @@ const ServiceCards = () => {
                   {/* Front Card */}
                   <div className="absolute w-full h-full backface-hidden rounded-xl p-8 bg-white/5 border border-white/10 flex flex-col justify-between">
                     <div>
-                      <img
+                      <Image
                         src={service.icon}
                         alt={service.title}
-                        className="w-15 h-15 mb-8"
+                        width={60} // Specify width in pixels
+                        height={60} // Specify height in pixels
+                        className="mb-8"
                         loading="lazy"
                       />
+
                       <h2 className="text-2xl font-semibold leading-tight whitespace-pre-line">
                         {service.title}
                       </h2>
@@ -133,10 +137,10 @@ const ServiceCards = () => {
           <div className="mt-16 flex justify-center">
             <Link
               href="/services"
-              className="relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border border-rose-400 rounded-lg group hover:border-transparent"
+              className="relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border border-blue-400 rounded-lg group hover:border-transparent"
             >
               <span className="relative z-10">All Services</span>
-              <div className="absolute inset-0 w-full h-full -translate-x-full bg-gradient-to-r from-rose-500 to-rose-300 transition-transform duration-500 group-hover:translate-x-0" />
+              <div className="absolute inset-0 w-full h-full -translate-x-full bg-gradient-to-r from-black to-[#00A8A8] transition-transform duration-500 group-hover:translate-x-0" />
             </Link>
           </div>
         </div>

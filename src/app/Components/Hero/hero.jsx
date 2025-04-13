@@ -3,14 +3,14 @@ import Image from "next/image";
 
 const Hero = () => {
   const images = [
-    "/images/h1.webp",
-    "/images/h2.webp",
-    "/images/h3.webp",
-    "/images/h4.webp",
-    "/images/h5.webp",
-    "/images/h6.webp",
-    "/images/h7.webp",
-    "/images/h4.webp", // Added 3 more images
+    "/images/abstract-dark-background-with-flowing-colouful-waves.jpg",
+    "/images/future-artificial-intelligence-robot-cyborg.jpg",
+    "/images/h2.jpg",
+    "/images/saas-concept-collage.jpg",
+    "/images/h5.jpg",
+    "/images/descomposition-person-wearing-vr-glasses (1).jpg",
+    "/images/ai-cloud-concept-with-robot-hand (1).jpg",
+    "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg", // Added 3 more images
   ];
 
   return (

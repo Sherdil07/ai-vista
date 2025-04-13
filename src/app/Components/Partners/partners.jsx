@@ -3,13 +3,10 @@
 import { useEffect } from "react";
 
 const logos = [
-  "/logos/logo1.svg",
-  "/logos/logo2.svg",
-  "/logos/logo3.svg",
-  "/logos/logo4.svg",
-  "/logos/logo5.svg",
-  "/logos/amsterdam.png",
-  "/logos/brand.png",
+  "/logos/Frame 47.png",
+  "/logos/Frame 45.png",
+  "/logos/Frame 45 (1).png",
+  "/logos/Frame 46.png",
 ];
 
 export default function Partners() {
@@ -66,10 +63,6 @@ export default function Partners() {
   return (
     <section className="bg-black py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-sm text-gray-400 font-semibold tracking-widest uppercase mb-8">
-          Trusted by Industry Leaders
-        </h2>
-
         <div className="relative overflow-hidden gradient-overlay">
           <div className="slide-track">
             {[...logos, ...logos].map((logo, index) => (

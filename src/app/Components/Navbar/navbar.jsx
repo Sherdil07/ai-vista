@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -226,19 +227,22 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-black backdrop-blur-lg border-gray-100 w-full z-50 relative">
+      <nav className="bg-gradient-to-r from-black via-black to-[#00A8A8] backdrop-blur-lg border-gray-100 w-full z-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             {/* Logo */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
             >
               <Link href="/">
-                <span className="text-2xl font-bold bg-gradient-to-r from-white to-[#00A8A8] bg-clip-text text-transparent">
-                  Logo
-                </span>
+                <Image
+                  src="/images/logo.svg"
+                  alt="Your Brand Logo"
+                  width={128}
+                  height={40}
+                  className="hover:scale-105 transition-transform"
+                />
               </Link>
             </motion.div>
 

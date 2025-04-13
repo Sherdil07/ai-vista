@@ -2,7 +2,7 @@
 import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import Heading from "./headingUaeCase";
+import Heading from "./headingUseCase";
 
 // Individual Card Component
 const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
@@ -52,43 +52,47 @@ const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
           scale,
           top: `calc(-5vh + ${i * 25}px)`,
           y,
-          rotateX: rotate, // Apply tilt animation
+          rotateX: rotate,
         }}
-        className="flex flex-col relative aspect-square h-auto w-full max-w-2xl rounded-xl overflow-hidden shadow-2xl"
+        className="flex flex-col relative w-[90%] sm:w-[92%] md:w-[94%] lg:w-[96%] xl:w-[98%] max-w-4xl rounded-xl overflow-hidden shadow-2xl"
       >
-        {/* Background Image Container */}
-        <div className="absolute inset-0 w-full h-full">
-          <motion.div className="w-full h-full" style={{ scale: imageScale }}>
-            <Image
-              fill
-              src={src}
-              alt={`${title} concept`}
-              className="object-cover"
-            />
-          </motion.div>
-        </div>
+        {/* Improved aspect ratio wrapper with Tailwind classes */}
+        <div className="pb-[70%] sm:pb-[75%] md:pb-[60%] lg:pb-[55%] relative w-full">
+          {/* Background Image Container */}
+          <div className="absolute inset-0 w-full h-full">
+            <motion.div className="w-full h-full" style={{ scale: imageScale }}>
+              <Image
+                fill
+                src={src}
+                alt={`${title} concept`}
+                className="object-cover object-center"
+                sizes="(max-width: 640px) 90vw, (max-width: 768px) 92vw, (max-width: 1024px) 94vw, 96vw"
+              />
+            </motion.div>
+          </div>
 
-        {/* Content - Number positioned at top-left */}
-        <div className="absolute top-6 left-6 text-lg font-medium text-white/80">
-          {String(i + 1).padStart(2, "0")}
-        </div>
+          {/* Content - Number positioned at top-left */}
+          <div className="absolute top-6 left-6 text-lg font-medium text-white/80">
+            {String(i + 1).padStart(2, "0")}
+          </div>
 
-        {/* Title with fill animation */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex items-center">
-            <span className="text-white mr-2">»</span>
-            <h2
-              ref={textRef}
-              className="text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(90deg, white 0%, white 100%)`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "left",
-                WebkitBackgroundClip: "text",
-              }}
-            >
-              {title}
-            </h2>
+          {/* Title with fill animation */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex items-center">
+              <span className="text-white mr-2">»</span>
+              <h2
+                ref={textRef}
+                className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(90deg, white 0%, white 100%)`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "left",
+                  WebkitBackgroundClip: "text",
+                }}
+              >
+                {title}
+              </h2>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -134,32 +138,27 @@ const SpaceThemedCards = () => {
   const cards = [
     {
       title: "BEYOND",
-      src: "/images/h1.webp",
+      src: "/images/ai-cloud-concept-with-robot-hand (1).jpg",
       color: "#D6336C",
     },
     {
       title: "EXPLORE",
-      src: "/images/h2.webp",
+      src: "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg",
       color: "#1E3A8A",
     },
     {
       title: "DISCOVER",
-      src: "/images/h3.webp",
+      src: "/images/Mobile App Dev.jpeg",
       color: "#5B21B6",
-    },
-    {
-      title: "IMAGINE",
-      src: "/images/h4.webp",
-      color: "#065F46",
     },
   ];
 
   return (
     <main ref={container} className="relative z-10 bg-black">
-      {/* Header with fill animation - further reduced height on mobile */}
-      <div className="h-[30vh] sm:h-[40vh] md:h-screen flex flex-col items-center justify-center text-center px-4">
+      {/* Reduced height header to decrease gap to cards */}
+      <div className="h-[20vh] sm:h-[30vh] md:h-[80vh] flex flex-col items-center justify-center text-center px-4">
         <Heading />
-        <div className="mt-4 sm:mt-6 md:mt-12 animate-bounce">
+        <div className="mt-4 sm:mt-6 md:mt-8 animate-bounce">
           <svg
             className="w-6 h-6 text-white"
             fill="none"

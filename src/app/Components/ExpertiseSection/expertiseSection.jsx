@@ -2,8 +2,8 @@
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useAnimation } from "framer-motion";
 import Image from "next/image";
-import imageSrc from "../../../../public/images/ex-bg.webp";
-import imageSrc2 from "../../../../public/images/ex-front.webp";
+import imageSrc from "../../../../public/images/front.png";
+import imageSrc2 from "../../../../public/images/front.png";
 
 export default function ExpertiseSection() {
   const imageRef = useRef(null);
@@ -45,7 +45,7 @@ export default function ExpertiseSection() {
   }, [scrollYProgress, textControls]);
 
   return (
-    <section className="min-h-screen bg-black text-white flex items-center justify-center p-8">
+    <section className="min-h-screen bg-black text-white flex items-center justify-center p-8 pb-2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl w-full items-center">
         {/* Image Container */}
         <div className="relative w-full h-[300px] md:h-[500px]" ref={imageRef}>
@@ -99,7 +99,7 @@ export default function ExpertiseSection() {
               animate={textControls}
               initial={{ backgroundSize: "0% 100%", opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="bg-gradient-to-r from-white to-pink-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-white to-[#00A8A8] bg-clip-text text-transparent"
               style={{ backgroundRepeat: "no-repeat" }}
             >
               Trust
@@ -115,7 +115,7 @@ export default function ExpertiseSection() {
             closely with you to ensure that our AI solutions not only meet but
             exceed your expectations.
           </p>
-          <button className="mt-6 inline-flex items-center bg-pink-500 text-white px-6 py-3 rounded hover:bg-pink-600 transition">
+          <button className="mt-6 inline-flex items-center bg-[#00A8A8] text-white px-6 py-3 rounded hover:bg-pink-600 transition">
             <span className="mr-2">➤</span> Get In Touch
           </button>
         </div>
