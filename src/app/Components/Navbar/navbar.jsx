@@ -311,9 +311,13 @@ const Navbar = () => {
 
                 <div className="w-full flex justify-between items-center h-20 border-b border-[#ffffff33] px-6 relative z-10">
                   <Link href="/">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-white to-[#00A8A8] bg-clip-text text-transparent">
-                      Logo
-                    </span>
+                    <Image
+                      src="/images/logo.svg"
+                      alt="Your Brand Logo"
+                      width={128}
+                      height={40}
+                      className="hover:scale-105 transition-transform"
+                    />
                   </Link>
 
                   {/* Close button (separate from the dots for smoother transition) */}
