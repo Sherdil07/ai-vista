@@ -39,6 +39,7 @@ export default function ExpertiseSection() {
       const progress = Math.min(Math.max((v - 0) / 0.5, 0), 1); // 0 to 1
       textControls.start({
         backgroundSize: `${progress * 100}% 100%`,
+        opacity: progress, // Fade-in effect
       });
     });
   }, [scrollYProgress, textControls]);
@@ -47,7 +48,7 @@ export default function ExpertiseSection() {
     <section className="min-h-screen bg-black text-white flex items-center justify-center p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl w-full items-center">
         {/* Image Container */}
-        <div className="relative w-full h-[500px]" ref={imageRef}>
+        <div className="relative w-full h-[300px] md:h-[500px]" ref={imageRef}>
           {/* Background Image */}
           <motion.div
             style={{
@@ -89,12 +90,12 @@ export default function ExpertiseSection() {
 
         {/* Text Content */}
         <div>
-          <h1 className="text-6xl font-bold leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
             EXPERTISE <br />
             YOU{" "}
             <motion.span
               animate={textControls}
-              initial={{ backgroundSize: "0% 100%" }}
+              initial={{ backgroundSize: "0% 100%", opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="bg-gradient-to-r from-white to-pink-500 bg-clip-text text-transparent"
               style={{ backgroundRepeat: "no-repeat" }}
