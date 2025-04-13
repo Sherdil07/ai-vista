@@ -156,10 +156,10 @@ const SpaceThemedCards = () => {
 
   return (
     <main ref={container} className="relative z-10 bg-black">
-      {/* Header with fill animation - reduced height on mobile */}
-      <div className="h-[60vh] md:h-screen flex flex-col items-center justify-center text-center px-4">
+      {/* Header with fill animation - further reduced height on mobile */}
+      <div className="h-[30vh] sm:h-[40vh] md:h-screen flex flex-col items-center justify-center text-center px-4">
         <Heading />
-        <div className="mt-6 md:mt-12 animate-bounce">
+        <div className="mt-4 sm:mt-6 md:mt-12 animate-bounce">
           <svg
             className="w-6 h-6 text-white"
             fill="none"
