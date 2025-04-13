@@ -155,10 +155,10 @@ const SpaceThemedCards = () => {
 
   return (
     <main ref={container} className="relative z-10 bg-black">
-      {/* Reduced height header to decrease gap to cards */}
-      <div className="h-[20vh] sm:h-[30vh] md:h-[80vh] flex flex-col items-center justify-center text-center px-4">
+      {/* Significantly reduced header height */}
+      <div className="h-[10vh] sm:h-[15vh] md:h-[25vh] flex flex-col items-center justify-center text-center">
         <Heading />
-        <div className="mt-4 sm:mt-6 md:mt-8 animate-bounce">
+        <div className="mt-2 sm:mt-3 md:mt-4 animate-bounce">
           <svg
             className="w-6 h-6 text-white"
             fill="none"

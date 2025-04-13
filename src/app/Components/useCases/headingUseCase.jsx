@@ -86,12 +86,12 @@ const AnimatedHeading = () => {
   };
 
   return (
-    <div className="pb-0 pt-0 px-4">
-      <div ref={headingRef} className="flex flex-col items-center space-y-2">
-        <h2 className="text-5xl font-bold">
+    <div className="p-0 m-0 mt-40 sm:mt-0">
+      <div ref={headingRef} className="flex flex-col items-center space-y-1">
+        <h2 className="text-4xl sm:text-5xl font-bold">
           {createAnimatedText("PORTFOLIO")}
         </h2>
-        <div className="flex space-x-4 text-5xl font-bold">
+        <div className="flex space-x-2 sm:space-x-4 text-4xl sm:text-5xl font-bold">
           <div>{createAnimatedText("USE")}</div>
           <div>{createAnimatedText("Cases", true)}</div>
         </div>
