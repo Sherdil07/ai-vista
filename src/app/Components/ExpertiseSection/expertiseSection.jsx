@@ -12,31 +12,31 @@ export default function ExpertiseSection() {
     offset: ["start end", "end start"],
   });
 
-  // Shared X & Y movement to simulate joining from bottom-left corner
-  const x = useTransform(scrollYProgress, [0, 0.5], ["-30%", "0%"]);
-  const y = useTransform(scrollYProgress, [0, 0.5], ["30%", "0%"]);
+  // Adjusted X & Y movement to keep images in a smooth range
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "4%"]);
 
-  // Rotation
+  // Rotation for subtle scissor-like effect
   const fgRotate = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    ["10deg", "0deg", "-10deg"]
+    ["5deg", "0deg", "-5deg"]
   );
   const bgRotate = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    ["-10deg", "0deg", "10deg"]
+    ["-5deg", "0deg", "5deg"]
   );
 
-  // Subtle scaling for realism
-  const fgScale = useTransform(scrollYProgress, [0, 0.5], [1.1, 1]);
-  const bgScale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
+  // Scaling for foreground and background images
+  const fgScale = useTransform(scrollYProgress, [0, 0.5], [1.05, 1]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5], [0.95, 1]);
 
-  // TRUST text animation
+  // TRUST text animation for fade-in and gradient filling effect
   const textControls = useAnimation();
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
-      const progress = Math.min(Math.max((v - 0) / 0.5, 0), 1); // 0 to 1
+      const progress = Math.min(Math.max((v - 0) / 0.5, 0), 1); // Normalize to 0-1
       textControls.start({
         backgroundSize: `${progress * 100}% 100%`,
         opacity: progress, // Fade-in effect
@@ -56,15 +56,16 @@ export default function ExpertiseSection() {
               y,
               rotate: bgRotate,
               scale: bgScale,
-              transformOrigin: "bottom left",
+              transformOrigin: "bottom left", // Fixed at bottom-left corner
             }}
-            className="absolute bottom-0 left-0 w-full h-full"
+            className="absolute bottom-0 left-0 w-full h-full flex justify-center"
           >
             <Image
               src={imageSrc}
               alt="Background VR"
               fill
-              className="object-cover blur-[1.5px] opacity-30"
+              className="object-contain blur-[1.5px] opacity-30"
+              sizes="(max-width: 1439px) 94vw, 1344px"
             />
           </motion.div>
 
@@ -75,21 +76,22 @@ export default function ExpertiseSection() {
               y,
               rotate: fgRotate,
               scale: fgScale,
-              transformOrigin: "bottom left",
+              transformOrigin: "bottom left", // Fixed at bottom-left corner
             }}
-            className="absolute bottom-0 left-0 w-full h-full"
+            className="absolute bottom-0 left-0 w-full h-full flex justify-center"
           >
             <Image
               src={imageSrc2}
               alt="Foreground VR"
               fill
-              className="object-cover"
+              className="object-contain"
+              sizes="(max-width: 1439px) 94vw, 1344px"
             />
           </motion.div>
         </div>
 
         {/* Text Content */}
-        <div>
+        <div className="relative z-10 ml-8 md:ml-16 space-y-4">
           <h1 className="text-5xl md:text-6xl font-bold leading-tight">
             EXPERTISE <br />
             YOU{" "}
