@@ -136,13 +136,13 @@
 /* Mobile Landscape */
 @media (max-width: 768px) and (orientation: landscape) {
   .item {
-    height: 160px;
-    width: 130px;
+    height: 120px;
+    width: 120px;
   }
   .banner {
     height: 130vh;
   }
   .slider {
-    top: 55%;
+    top: 75%;
   }
 }
