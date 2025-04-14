@@ -17,6 +17,7 @@ const ServiceCards = () => {
       number: "#01",
       description:
         "Develop predictive models and automate decision-making processes with custom machine learning algorithms that learn from your data.",
+      bgImage: "/images/ai-cloud-concept-with-robot-hand (1).jpg", // Add background image path here
     },
     {
       id: 2,
@@ -25,6 +26,8 @@ const ServiceCards = () => {
       number: "#02",
       description:
         "Leverage image and video analysis to automate visual inspection, enhance security, or provide innovative customer experiences through facial recognition, object detection, and more.",
+      bgImage:
+        "/images/crm-customer-relationship-management-business-sales-marketing-system-concept.jpg", // Add background image path here
     },
     {
       id: 3,
@@ -33,6 +36,8 @@ const ServiceCards = () => {
       number: "#03",
       description:
         "Transform raw data into actionable insights with AI-driven analytics that identify patterns, trends, and anomalies in your data, improving strategic decision-making.",
+      bgImage:
+        "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg", // Add background image path here
     },
     {
       id: 4,
@@ -41,6 +46,7 @@ const ServiceCards = () => {
       number: "#04",
       description:
         "Work with our AI consultants to develop a strategic roadmap tailored to your organization's unique needs, from AI readiness assessment to full-scale AI implementation.",
+      bgImage: "/images/e-learning-student-university-conceptual.jpg", // Add background image path here
     },
   ];
 
@@ -79,8 +85,24 @@ const ServiceCards = () => {
                   }`}
                 >
                   {/* Front Card */}
-                  <div className="absolute w-full h-full backface-hidden rounded-xl p-8 bg-white/5 border border-white/10 flex flex-col justify-between">
-                    <div>
+                  <div className="absolute w-full h-full backface-hidden rounded-xl p-8 bg-white/5 border border-white/10 flex flex-col justify-between overflow-hidden">
+                    {/* Background Image with Overlay */}
+                    <div className="absolute inset-0 z-0">
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={service.bgImage}
+                          alt=""
+                          fill
+                          className="object-cover opacity-25" // Increased opacity from 10% to 25%
+                          loading="lazy"
+                        />
+                        {/* Lighter gradient overlay to allow more image visibility */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80"></div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10">
                       <Image
                         src={service.icon}
                         alt={service.title}
@@ -90,12 +112,12 @@ const ServiceCards = () => {
                         loading="lazy"
                       />
 
-                      <h2 className="text-2xl font-semibold leading-tight whitespace-pre-line">
+                      <h2 className="text-2xl font-semibold leading-tight whitespace-pre-line text-white">
                         {service.title}
                       </h2>
                     </div>
                     <div className="absolute bottom-6 right-6 z-10">
-                      <div className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg">
+                      <div className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-lg">
                         <svg
                           className="w-6 h-6"
                           viewBox="0 0 24 24"
