@@ -17,6 +17,7 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    // Prevent body scrolling when menu is open
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -36,13 +37,17 @@ const Navbar = () => {
     { name: "Contact", href: "/contact" },
   ];
 
+  // Modified dot animation with proper horizontal ellipsis transformation
   const dotVariants = {
     open: (custom) => {
+      // For open state, show horizontal ellipsis (...)
+      // Only make the dots at positions 3, 4, and 5 visible (indices 2, 4, 6 for middle row)
       const isMiddleDot = custom === 3 || custom === 4 || custom === 5;
       return {
         opacity: isMiddleDot ? 1 : 0,
+        // Position the dots horizontally in the center with equal spacing
         x: isMiddleDot ? (custom - 4) * 12 : 0,
-        y: 0,
+        y: 0, // All dots aligned to the center vertically
         scale: isMiddleDot ? 1 : 0,
         transition: {
           duration: 0.5,
@@ -51,9 +56,9 @@ const Navbar = () => {
       };
     },
     closed: (custom) => ({
-      opacity: 1,
-      x: (custom % 3) * 16 - 16,
-      y: Math.floor(custom / 3) * 16 - 16,
+      opacity: 1, // All 9 dots visible
+      x: (custom % 3) * 16 - 16, // Grid position X
+      y: Math.floor(custom / 3) * 16 - 16, // Grid position Y
       scale: 1,
       transition: {
         duration: 0.5,
@@ -62,6 +67,7 @@ const Navbar = () => {
     }),
   };
 
+  // Mobile menu slide from top animation
   const menuSlide = {
     initial: { y: "-100%" },
     enter: { y: "0", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } },
@@ -71,6 +77,7 @@ const Navbar = () => {
     },
   };
 
+  // Item slide animation for mobile menu - coming from bottom
   const slide = {
     initial: { y: 80, opacity: 0 },
     enter: (i) => ({
@@ -85,6 +92,7 @@ const Navbar = () => {
     }),
   };
 
+  // Page transition animation with curved clip path
   const pageTransition = {
     initial: {
       y: "100%",
@@ -106,7 +114,7 @@ const Navbar = () => {
     },
     exit: {
       y: "-50%",
-      clipPath: "ellipse(140% 100% at 50% -50%)",
+      clipPath: "ellipse(140% 100% at 50% -50%)", // curved exit upward
       opacity: 1,
       transition: {
         duration: 1.2,
@@ -119,6 +127,7 @@ const Navbar = () => {
     },
   };
 
+  // Title animation for page transition
   const titleAnimation = {
     initial: {
       y: 60,
@@ -147,9 +156,10 @@ const Navbar = () => {
     },
   };
 
+  // Button container rotation animation - UPDATED with rotation
   const buttonContainerVariants = {
     open: {
-      rotate: 180,
+      rotate: 180, // Rotate 180 degrees when opening
       transition: { duration: 0.7, ease: [0.32, 0.72, 0, 1] },
     },
     closed: {
@@ -158,6 +168,7 @@ const Navbar = () => {
     },
   };
 
+  // Close button animation
   const closeButtonVariants = {
     initial: { opacity: 0, scale: 0.8 },
     animate: {
@@ -168,21 +179,50 @@ const Navbar = () => {
     exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
   };
 
+  // Handle navigation with transition animation
   const handleNavigation = (href, name) => {
     setIsPageTransitioning(true);
     setTransitionPage(name);
     setIsOpen(false);
 
+    // Initial phase - showing the transition screen
     setTimeout(() => {
+      // Begin exit phase
       setIsExiting(true);
+
+      // Delay navigation to allow for exit animation
       setTimeout(() => {
         router.push(href);
+
+        // Reset states after navigation
         setTimeout(() => {
           setIsPageTransitioning(false);
           setIsExiting(false);
         }, 500);
-      }, 1000);
-    }, 1500);
+      }, 1000); // Delay navigation until exit animation is underway
+    }, 1500); // Allow entrance animation to complete
+  };
+
+  // Text hover animation component
+  const TextHover = ({ title }) => {
+    return (
+      <div className="group overflow-hidden cursor-pointer transition-all ease-in-out duration-200">
+        <div className="relative transition-all ease-in-out duration-500">
+          <div>
+            <h1 className="translate-y-[0%] group-hover:translate-y-[-100%] absolute left-0 transition-all ease-in-out duration-500">
+              <div className="translate-y-[0%] group-hover:translate-y-[-100%] transition-all ease-in-out duration-500 font-bold text-white">
+                {title}
+              </div>
+            </h1>
+            <h1 className="relative transition-all ease-in-out duration-500">
+              <div className="translate-y-[100%] group-hover:translate-y-[0%] transition-all ease-in-out duration-500 font-bold text-white">
+                {title}
+              </div>
+            </h1>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -190,6 +230,7 @@ const Navbar = () => {
       <nav className="bg-gradient-to-r from-black via-black to-[#00A8A8] backdrop-blur-lg border-gray-100 w-full z-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
+            {/* Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -205,17 +246,35 @@ const Navbar = () => {
               </Link>
             </motion.div>
 
+            {/* Desktop Navigation with TextHover effect */}
+            <div className="hidden md:flex space-x-6">
+              {navItems.map((item) => (
+                <motion.div
+                  key={item.name}
+                  className="px-4 py-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleNavigation(item.href, item.name)}
+                >
+                  <TextHover title={item.name} />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Mobile Toggle Button with rotating dots animation */}
             <motion.button
-              className="p-3 rounded-xl relative z-50"
+              className="md:hidden p-3 rounded-xl relative z-50"
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
             >
+              {/* Container for dots with rotation animation */}
               <motion.div
                 className="w-8 h-8 relative"
                 variants={buttonContainerVariants}
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
               >
+                {/* All 9 dots using array mapping for cleaner code */}
                 {[...Array(9)].map((_, i) => (
                   <motion.span
                     key={`dot-${i}`}
@@ -236,6 +295,7 @@ const Navbar = () => {
             </motion.button>
           </div>
 
+          {/* Enhanced Mobile Menu with slide-from-top animation and fully opaque background */}
           <AnimatePresence mode="wait">
             {isOpen && (
               <motion.div
@@ -243,9 +303,10 @@ const Navbar = () => {
                 initial="initial"
                 animate="enter"
                 exit="exit"
-                className="fixed top-0 left-0 right-0 z-40 w-full min-h-screen flex flex-col bg-gradient-to-r from-black to-[#00A8A8]"
-                style={{ backgroundColor: "rgba(0,0,0,0.98)" }}
+                className="md:hidden fixed top-0 left-0 right-0 z-40 w-full min-h-screen flex flex-col bg-gradient-to-r from-black to-[#00A8A8]"
+                style={{ backgroundColor: "rgba(0,0,0,0.98)" }} // Ensure high opacity
               >
+                {/* Add an overlay to ensure complete coverage */}
                 <div className="absolute inset-0 bg-black opacity-95 z-0"></div>
 
                 <div className="w-full flex justify-between items-center h-20 border-b border-[#ffffff33] px-6 relative z-10">
@@ -259,12 +320,13 @@ const Navbar = () => {
                     />
                   </Link>
 
+                  {/* Close button (separate from the dots for smoother transition) */}
                   <motion.div
                     variants={closeButtonVariants}
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="opacity-0 hidden"
+                    className="opacity-0 hidden" // We're using the dot pattern instead
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -284,6 +346,7 @@ const Navbar = () => {
                   </motion.div>
                 </div>
 
+                {/* Centered menu items that slide from bottom */}
                 <div className="flex-grow flex flex-col justify-center items-center relative z-10">
                   <ul className="w-full flex flex-col items-center justify-center gap-8 p-8">
                     {navItems.map((item, i) => (
@@ -312,6 +375,7 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* Page Transition Overlay */}
       <AnimatePresence mode="wait">
         {isPageTransitioning && (
           <motion.div
@@ -320,6 +384,7 @@ const Navbar = () => {
             animate={isExiting ? "exit" : "animate"}
             className="fixed inset-0 w-full h-full z-[100] bg-gradient-to-r from-black to-[#00A8A8] flex items-center justify-center overflow-hidden"
           >
+            {/* Wave overlay for added dimension */}
             <motion.div
               className="absolute inset-0 opacity-20 bg-white"
               initial={{ opacity: 0 }}
@@ -344,6 +409,7 @@ const Navbar = () => {
                 {transitionPage}
               </motion.h1>
 
+              {/* Decorative curved line */}
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
@@ -358,6 +424,7 @@ const Navbar = () => {
                 className="h-1 bg-white rounded-full mt-4"
               />
 
+              {/* Additional decorative elements */}
               <motion.div
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center"
                 initial={{ scale: 0.8, opacity: 0 }}

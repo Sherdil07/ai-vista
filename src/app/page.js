@@ -14,12 +14,12 @@ export default function Home() {
   return (
     <div>
       {/* <Navbar /> */}
-      <SloganSlider />
+      {/* <SloganSlider />
       <Hero />
       <Partners />
       <ServiceCards />
       <ExpertiseSection />
-      <AIInActionCards />
+      <AIInActionCards /> */}
       {/* <TransformBusinessHero /> */}
     </div>
   );
