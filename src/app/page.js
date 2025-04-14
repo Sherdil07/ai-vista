@@ -16,11 +16,13 @@ export default function Home() {
       {/* <Navbar /> */}
       {/* <SloganSlider />
       <Hero />
-      <Partners />
+      
       <ServiceCards />
       <ExpertiseSection />
       <AIInActionCards /> */}
       {/* <TransformBusinessHero /> */}
+      <Hero />
+      {/* <Partners /> */}
     </div>
   );
 }

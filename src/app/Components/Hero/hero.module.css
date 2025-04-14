@@ -8,22 +8,24 @@
 
 .image {
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  height: 100%;
+  box-shadow: 0 0 15px rgba(51, 42, 42, 0.2);
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
-  width: 100%;
 }
 
 .item {
   height: 270px;
+  width: 220px;
   position: absolute;
   right: 0;
   top: 50%;
   transform: rotateY(calc(var(--position) * (360deg / var(--quantity))))
     translateY(-50%);
   transform-origin: right center;
-  width: 220px;
+  overflow: hidden;
 }
 
 @keyframes autoRun {
@@ -46,14 +48,101 @@
   width: 0;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
+/* 4K+ Screens */
+@media (min-width: 1600px) {
+  .item {
+    height: 380px;
+    width: 320px;
+  }
+  .slider {
+    top: 58%;
+    transform: translate(-50%, -50%) rotateX(40deg);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) and (max-width: 1599px) {
+  .item {
+    height: 340px;
+    width: 280px;
+  }
+}
+
+/* iPad Pro 12.9" */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .item {
+    height: 520px;
+    width: 350px;
+  }
+  .slider {
+    top: 45%;
+    transform: translate(-50%, -50%) rotateX(38deg);
+  }
+}
+
+/* iPad & iPad Mini */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .item {
+    height: 400px;
+    width: 300px;
+  }
+  .slider {
+    top: 45%;
+    transform: translate(-50%, -50%) rotateX(42deg);
+  }
+}
+
+/* Medium Phones */
+@media (max-width: 768px) and (min-width: 376px) {
   .item {
     height: 220px;
     width: 180px;
   }
-
   .banner {
-    height: 90vh;
+    height: 85vh;
+  }
+  .slider {
+    top: 48%;
+    transform: translate(-50%, -50%) rotateX(45deg);
+  }
+}
+
+/* Small Phones */
+@media (max-width: 375px) {
+  .item {
+    height: 200px;
+    width: 160px;
+  }
+  .banner {
+    height: 80vh;
+  }
+  .slider {
+    top: 58%;
+  }
+}
+
+/* iPad Landscape */
+@media (min-width: 769px) and (orientation: landscape) {
+  .item {
+    height: 350px;
+    width: 300px;
+  }
+  .slider {
+    top: 55%;
+    transform: translate(-50%, -50%) rotateX(35deg);
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .item {
+    height: 160px;
+    width: 130px;
+  }
+  .banner {
+    height: 130vh;
+  }
+  .slider {
+    top: 55%;
   }
 }

@@ -10,20 +10,20 @@ const Hero = () => {
     "/images/h5.jpg",
     "/images/descomposition-person-wearing-vr-glasses (1).jpg",
     "/images/ai-cloud-concept-with-robot-hand (1).jpg",
-    "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg", // Added 3 more images
+    "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg",
   ];
 
   return (
     <div className={styles.banner}>
-      {/* Headings */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 text-center  w-full">
+      {/* Headings section */}
+      <div className={`${styles.headings} text-center`}>
         <h1 className="text-5xl font-bold text-white mb-4">
           UNLOCK THE FUTURE
         </h1>
         <h2 className="text-4xl italic text-[#00A8A8]">With AI</h2>
       </div>
 
-      {/* Zero-sized central container acting as the rotation axis */}
+      {/* 3D Carousel */}
       <div className={styles.slider} style={{ "--quantity": images.length }}>
         {images.map((src, index) => (
           <div
@@ -34,10 +34,15 @@ const Hero = () => {
             <Image
               src={src}
               alt={`Image ${index + 1}`}
-              width={200}
-              height={250}
+              width={800}
+              height={1080}
               className={styles.image}
               priority
+              style={{
+                width: "100%",
+                height: "100%",
+                objectPosition: "center",
+              }}
             />
           </div>
         ))}
