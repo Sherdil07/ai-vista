@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Heading from "./headingUseCase";
 
-// Individual Card Component
 const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
   const container = useRef(null);
   const textRef = useRef(null);
@@ -14,13 +13,12 @@ const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
     offset: ["start end", "start start"],
   });
 
-  // Animation transformations
+  // Smoother animation transformations
   const scale = useTransform(progress, range, [1, targetScale]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [200, 0]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
-  const rotate = useTransform(scrollYProgress, [0, 0.5], [10, 0]); // Tilt animation
+  const y = useTransform(scrollYProgress, [0, 0.5], [150, 0]); // Reduced initial offset
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1]); // Subtler zoom effect
+  const rotate = useTransform(scrollYProgress, [0, 0.5], [5, 0]); // Reduced tilt angle
 
-  // Text fill animation
   useEffect(() => {
     const text = textRef.current;
     if (!text) return;
@@ -33,7 +31,6 @@ const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
         Math.min(1, (windowHeight - rect.top) / windowHeight)
       );
 
-      // Set the text fill based on scroll position
       text.style.backgroundSize = `${visiblePercentage * 100}% 100%`;
     };
 
@@ -50,39 +47,43 @@ const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
         style={{
           backgroundColor: color,
           scale,
-          top: `calc(-5vh + ${i * 25}px)`,
+          top: `calc(-3vh + ${i * 15}px)`, // Reduced vertical overlap
           y,
           rotateX: rotate,
         }}
-        className="flex flex-col relative w-[90%] sm:w-[92%] md:w-[94%] lg:w-[96%] xl:w-[98%] max-w-4xl rounded-xl overflow-hidden shadow-2xl"
+        className="flex flex-col relative w-[95%] sm:w-[92%] md:w-[94%] lg:w-[96%] max-w-3xl rounded-xl overflow-hidden shadow-2xl"
       >
-        {/* Improved aspect ratio wrapper with Tailwind classes */}
-        <div className="pb-[70%] sm:pb-[75%] md:pb-[60%] lg:pb-[55%] relative w-full">
-          {/* Background Image Container */}
+        {/* Increased mobile size */}
+        <div className="pb-[80%] sm:pb-[75%] md:pb-[60%] lg:pb-[55%] relative w-full">
           <div className="absolute inset-0 w-full h-full">
-            <motion.div className="w-full h-full" style={{ scale: imageScale }}>
+            <motion.div
+              className="w-full h-full"
+              style={{
+                scale: imageScale,
+                transition: { type: "spring", damping: 15, stiffness: 100 }, // Smoother animation
+              }}
+            >
               <Image
                 fill
                 src={src}
                 alt={`${title} concept`}
                 className="object-cover object-center"
-                sizes="(max-width: 640px) 90vw, (max-width: 768px) 92vw, (max-width: 1024px) 94vw, 96vw"
+                sizes="(max-width: 640px) 95vw, (max-width: 768px) 92vw, (max-width: 1024px) 94vw, 96vw"
+                priority={i === 0} // Prioritize first image load
               />
             </motion.div>
           </div>
 
-          {/* Content - Number positioned at top-left */}
-          <div className="absolute top-6 left-6 text-lg font-medium text-white/80">
+          <div className="absolute top-4 left-4 text-base sm:text-lg font-medium text-white/80">
             {String(i + 1).padStart(2, "0")}
           </div>
 
-          {/* Title with fill animation */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="flex items-center">
               <span className="text-white mr-2">»</span>
               <h2
                 ref={textRef}
-                className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
                 style={{
                   backgroundImage: `linear-gradient(90deg, white 0%, white 100%)`,
                   backgroundRepeat: "no-repeat",
@@ -100,7 +101,6 @@ const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
   );
 };
 
-// Main Component
 const SpaceThemedCards = () => {
   const container = useRef(null);
   const titleRef = useRef(null);
@@ -111,7 +111,6 @@ const SpaceThemedCards = () => {
     offset: ["start start", "end end"],
   });
 
-  // Heading fill animation
   useEffect(() => {
     const titleElement = titleRef.current;
     const subtitleElement = subtitleRef.current;
@@ -119,10 +118,9 @@ const SpaceThemedCards = () => {
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const maxScroll = 300; // Adjust this value to control animation speed
+      const maxScroll = 300;
       const progress = Math.min(1, scrollPosition / maxScroll);
 
-      // Set the title fill based on scroll position
       titleElement.style.backgroundSize = `${progress * 100}% 100%`;
       subtitleElement.style.backgroundSize = `${Math.max(
         0,
@@ -134,7 +132,6 @@ const SpaceThemedCards = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Card Data
   const cards = [
     {
       title: "BEYOND",
@@ -155,16 +152,15 @@ const SpaceThemedCards = () => {
 
   return (
     <main ref={container} className="relative z-10 bg-black">
-      {/* Significantly reduced header height */}
-      <div className="h-[10vh] sm:h-[15vh] md:h-[25vh] flex flex-col items-center justify-center text-center">
+      {/* Reduced header height and spacing */}
+      <div className="h-[15vh] flex flex-col items-center justify-center text-center space-y-2">
         <Heading />
-        <div className="mt-2 sm:mt-3 md:mt-4 animate-bounce">
+        <div className="mt-1 animate-bounce-slow">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
@@ -176,24 +172,22 @@ const SpaceThemedCards = () => {
         </div>
       </div>
 
-      {/* Cards */}
       {cards.map((card, i) => {
-        const targetScale = 1 - (cards.length - i) * 0.05;
+        const targetScale = 1 - (cards.length - i) * 0.04; // Adjusted scale factor
         return (
           <SpaceCard
             key={i}
             i={i}
             {...card}
             progress={scrollYProgress}
-            range={[i * 0.25, 1]}
+            range={[i * 0.2, 1]} // Adjusted range for smoother transition
             targetScale={targetScale}
           />
         );
       })}
 
-      {/* Footer Space */}
       <div className="h-screen flex items-center justify-center">
-        {/* <p className="text-white/50">Journey into the future</p> */}
+        {/* Optional footer content */}
       </div>
     </main>
   );
