@@ -17,7 +17,7 @@ const Hero = () => {
     <div className={styles.banner}>
       {/* Headings section */}
       <div className={`${styles.headings} text-center`}>
-        <h1 className="text-6xl font-bold text-white mb-4">
+        <h1 className="text-6xl md:text-4xl sm:text-3xlfont-bold text-white mb-4">
           UNLOCK THE FUTURE
         </h1>
         <h2 className="text-4xl italic text-[#00A8A8]">With AI</h2>
