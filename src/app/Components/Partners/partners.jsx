@@ -114,7 +114,7 @@ export default function Partners() {
         }
         
         .logo-image {
-          height: 50px; /* Balanced height for mobile */
+          height: 80px !important; /* Balanced height for mobile */
           width: auto;
           max-width: 100%;
           filter: grayscale(100%) brightness(0.9) opacity(0.85);
@@ -134,7 +134,7 @@ export default function Partners() {
         }
         
         .logo-image {
-          height: 45px; /* Slightly smaller for very small phones */
+          height: 55px !important; /* Slightly smaller for very small phones */
         }
       }
 
@@ -146,7 +146,7 @@ export default function Partners() {
         }
         
         .logo-image {
-          height: 55px;
+          height: 65px !important;
         }
       }
 
