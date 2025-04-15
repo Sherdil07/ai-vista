@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState, useRef } from "react";
 
 const logos = [
@@ -15,24 +14,19 @@ export default function Partners() {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    // Function to update animation duration based on screen width - FASTER SPEEDS
     const updateAnimationSpeed = () => {
       if (window.innerWidth <= 768) {
-        setAnimationDuration(8); // Fast for mobile
+        setAnimationDuration(8);
       } else if (window.innerWidth <= 1024) {
-        setAnimationDuration(12); // Fast for tablets
+        setAnimationDuration(12);
       } else {
-        setAnimationDuration(15); // Fast for desktop
+        setAnimationDuration(15);
       }
     };
 
-    // Initial check
     updateAnimationSpeed();
-
-    // Set up event listener for window resize
     window.addEventListener("resize", updateAnimationSpeed);
 
-    // Create and inject CSS for smooth animation
     const style = document.createElement("style");
     style.innerHTML = `
       @keyframes slide {
@@ -50,11 +44,11 @@ export default function Partners() {
       
       .slide-track {
         display: flex;
-        width: 300%; /* Triple the logos for seamless looping */
+        width: 300%;
         animation: slide ${animationDuration}s linear infinite;
         will-change: transform;
         backface-visibility: hidden;
-        transform: translate3d(0, 0, 0); /* Hardware acceleration */
+        transform: translate3d(0, 0, 0);
       }
       
       .slide-track.paused {
@@ -72,7 +66,7 @@ export default function Partners() {
       .logo-image {
         transition: all 0.3s ease;
         filter: grayscale(100%) brightness(0.8) opacity(0.7);
-        object-fit: contain; /* Prevent image distortion */
+        object-fit: contain;
         max-width: 100%;
       }
       
@@ -102,84 +96,83 @@ export default function Partners() {
         background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
       }
 
+      /* Mobile View - Increased logo sizes */
       @media (max-width: 768px) {
         .slider-container {
-          padding: 0.5rem 0; /* Reduced padding on mobile */
-          margin-top: -11rem; /* Increased negative margin to reduce gap */
-          min-height: 0; /* Prevent excessive height */
+          padding: 0.75rem 0;
+          margin-top: -8rem; /* Reduced negative margin for better spacing */
         }
         
         .logo-item {
-          padding: 0 10px;
+          padding: 0 15px; /* Increased padding */
         }
         
         .logo-image {
-          height: 80px !important; /* Balanced height for mobile */
-          width: auto;
-          max-width: 100%;
+          height: 100px !important; /* Increased from 80px */
           filter: grayscale(100%) brightness(0.9) opacity(0.85);
         }
         
         .gradient-overlay::before,
         .gradient-overlay::after {
-          width: 50px;
+          width: 60px; /* Wider gradient overlay */
         }
       }
 
-      /* Small phones specific styling */
+      /* Small Phones */
       @media (max-width: 375px) {
         .slider-container {
-          margin-top: -2rem; /* Even more negative margin for small phones */
-          padding: 0.25rem 0;
+          margin-top: -1rem; /* Reduced negative margin */
+          padding: 0.5rem 0;
         }
         
         .logo-image {
-          height: 55px !important; /* Slightly smaller for very small phones */
+          height: 70px !important; /* Increased from 55px */
         }
       }
 
-      /* Tablet devices */
+      /* Tablets */
       @media (min-width: 769px) and (max-width: 1023px) {
         .slider-container {
-          margin-top: -12rem; /* Negative margin for tablets */
-          padding: 0.75rem 0;
+          margin-top: -10rem;
+          padding: 1rem 0;
         }
         
         .logo-image {
-          height: 65px !important;
+          height: 80px !important; /* Increased from 65px */
         }
       }
 
-      /* Laptops/smaller desktops */
+      /* Laptops */
       @media (min-width: 1024px) and (max-width: 1440px) {
         .slider-container {
-          margin-top: -1.5rem; /* Slight negative margin for laptops */
+          margin-top: -1.5rem;
         }
       }
       
-      /* Handle landscape orientation specifically */
+      /* Landscape Orientation */
       @media (max-width: 768px) and (orientation: landscape) {
         .slider-container {
-          margin-top: -14rem; /* More negative margin for landscape mobile */
-          padding: 0.25rem 0;
+          margin-top: -12rem;
+          padding: 0.5rem 0;
+        }
+        
+        .logo-image {
+          height: 80px !important;
         }
       }
     `;
     document.head.appendChild(style);
 
-    // Remove visibility transition events to prevent animation stuttering
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setIsPaused(true);
       } else {
-        // Small delay before resuming to ensure smooth transition
         setTimeout(() => setIsPaused(false), 10);
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    // Clean up
     return () => {
       document.head.removeChild(style);
       window.removeEventListener("resize", updateAnimationSpeed);
@@ -187,7 +180,6 @@ export default function Partners() {
     };
   }, [animationDuration]);
 
-  // Create an expanded logo array that repeats the logos 3 times for smoother looping
   const expandedLogos = [...logos, ...logos, ...logos];
   return (
     <section className="bg-black md:py-8 -mt-6 md:-mt-8 lg:-mt-6">
@@ -209,7 +201,7 @@ export default function Partners() {
                   src={logo}
                   alt={`Partner logo ${(index % logos.length) + 1}`}
                   loading="lazy"
-                  className="logo-image" // Remove inline height classes
+                  className="logo-image"
                 />
               </div>
             ))}
