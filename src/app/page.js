@@ -2,6 +2,7 @@ import Image from "next/image";
 import Hero from "./Components/Hero/hero";
 import SloganSlider from "./Components/SloganSlider/sloganSlider";
 import Partners from "./Components/Partners/partners";
+import ServiceCards from "./Components/ServiceCards/serviceCards";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <SloganSlider />
       <Hero />
       <Partners />
+      <ServiceCards />
     </div>
   );
 }
