@@ -61,13 +61,16 @@ export default function Partners() {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%; /* Allow the logo item to expand */
       }
       
       .logo-image {
         transition: all 0.3s ease;
         filter: grayscale(100%) brightness(0.8) opacity(0.7);
         object-fit: contain;
-        max-width: 100%;
+        width: auto; /* Allow the width to scale */
+        max-height: 120px; /* Default height for logos */
+        height: auto;
       }
       
       .logo-image:hover {
@@ -99,34 +102,36 @@ export default function Partners() {
       /* Mobile View - Increased logo sizes */
       @media (max-width: 768px) {
         .slider-container {
+        width: 400%;
           padding: 0.75rem 0;
-          margin-top: -8rem; /* Reduced negative margin for better spacing */
+          margin-top: -6rem; /* Adjusted negative margin */
+          
         }
         
         .logo-item {
-          padding: 0 15px; /* Increased padding */
+          padding: 0 10px; /* Increased padding for better spacing */
         }
         
         .logo-image {
-          height: 100px !important; /* Increased from 80px */
+          max-height: 150px !important; /* Increased logo size on mobile */
           filter: grayscale(100%) brightness(0.9) opacity(0.85);
         }
         
         .gradient-overlay::before,
         .gradient-overlay::after {
-          width: 60px; /* Wider gradient overlay */
+          width: 60px; /* Adjusted gradient overlay width */
         }
       }
 
       /* Small Phones */
       @media (max-width: 375px) {
         .slider-container {
-          margin-top: -1rem; /* Reduced negative margin */
+          margin-top: -1rem;
           padding: 0.5rem 0;
         }
         
         .logo-image {
-          height: 70px !important; /* Increased from 55px */
+          max-height: 120px !important; /* Increased from 100px */
         }
       }
 
@@ -138,7 +143,7 @@ export default function Partners() {
         }
         
         .logo-image {
-          height: 80px !important; /* Increased from 65px */
+          max-height: 150px !important; /* Increased from 120px */
         }
       }
 
@@ -147,8 +152,12 @@ export default function Partners() {
         .slider-container {
           margin-top: -1.5rem;
         }
+        
+        .logo-image {
+          max-height: 160px !important; /* Maintain large size on laptop */
+        }
       }
-      
+
       /* Landscape Orientation */
       @media (max-width: 768px) and (orientation: landscape) {
         .slider-container {
@@ -157,7 +166,7 @@ export default function Partners() {
         }
         
         .logo-image {
-          height: 80px !important;
+          max-height: 150px !important; /* Increased height for better visibility on landscape */
         }
       }
     `;
