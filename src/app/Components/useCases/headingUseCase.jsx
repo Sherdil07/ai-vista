@@ -38,7 +38,7 @@ const AnimatedHeading = () => {
   };
 
   return (
-    <div className="py-24 pt-2 px-4 bg-black">
+    <div className="py-8 pt-2 px-4 bg-black">
       <div
         ref={headingRef}
         className="flex flex-col items-center justify-center text-center"

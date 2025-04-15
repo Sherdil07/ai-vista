@@ -40,7 +40,7 @@ const ScrollingCards = () => {
         pin: true,
         start: "top top",
         end: () => `+=${items.length * 100}%`,
-        scrub: 1,
+        scrub: 0.25, // Speed up scroll when going back up
         invalidateOnRefresh: true,
       },
       defaults: { ease: "none" },
@@ -50,6 +50,7 @@ const ScrollingCards = () => {
       timeline.to(item, {
         scale: 0.9,
         borderRadius: "10px",
+        ease: "power1.inOut", // Smooth transition
       });
 
       timeline.to(items[index + 1], { yPercent: 0 }, "<");
@@ -61,7 +62,7 @@ const ScrollingCards = () => {
       {/* First Section */}
       <div className="overflow-hidden">
         <div className="container mx-auto px-10">
-          <div className="flex items-center justify-center min-h-screen">
+          <div className="flex items-center justify-center ">
             <div className="max-w-2xl text-center">
               <AnimatedHeading />
             </div>

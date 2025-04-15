@@ -126,8 +126,10 @@ export default function Partners() {
       /* Small Phones */
       @media (max-width: 375px) {
         .slider-container {
+        width:200%
           margin-top: -1rem;
           padding: 0.5rem 0;
+          
         }
         
         .logo-image {
