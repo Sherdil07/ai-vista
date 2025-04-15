@@ -108,13 +108,14 @@ export default function Partners() {
         }
         
         .logo-item {
-          padding: 0 10px;
+          padding: 0 12px;
         }
         
         .logo-image {
-          height: 32px; /* Fixed height instead of viewport-based */
+          height: 45px; /* Increased height for better readability */
           width: auto;
           max-width: 100%;
+          filter: grayscale(100%) brightness(0.9) opacity(0.85); /* Slightly increased visibility */
         }
         
         .gradient-overlay::before,
@@ -149,7 +150,7 @@ export default function Partners() {
   const expandedLogos = [...logos, ...logos, ...logos];
 
   return (
-    <section className="bg-black py-4 md:py-12">
+    <section className="bg-black md:py-12">
       <div className="container mx-auto px-4">
         <div className="slider-container gradient-overlay">
           <div
@@ -168,7 +169,7 @@ export default function Partners() {
                   src={logo}
                   alt={`Partner logo ${(index % logos.length) + 1}`}
                   loading="lazy"
-                  className="logo-image h-10 md:h-14"
+                  className="logo-image h-13 md:h-14"
                 />
               </div>
             ))}
