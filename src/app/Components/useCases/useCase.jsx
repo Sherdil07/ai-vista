@@ -40,7 +40,7 @@ const ScrollingCards = () => {
         pin: true,
         start: "top top",
         end: () => `+=${items.length * 100}%`,
-        scrub: 0.25, // Speed up scroll when going back up
+        scrub: 0.25,
         invalidateOnRefresh: true,
       },
       defaults: { ease: "none" },
@@ -50,7 +50,7 @@ const ScrollingCards = () => {
       timeline.to(item, {
         scale: 0.9,
         borderRadius: "10px",
-        ease: "power1.inOut", // Smooth transition
+        ease: "power1.inOut",
       });
 
       timeline.to(items[index + 1], { yPercent: 0 }, "<");
@@ -72,8 +72,10 @@ const ScrollingCards = () => {
 
       {/* Vertical Scrolling Section */}
       <div ref={verticalSectionRef} className="overflow-hidden scroll-section">
-        <div className="h-screen wrapper">
+        {/* Changed the wrapper height for mobile */}
+        <div className="h-[80vh] sm:h-screen wrapper">
           <div role="list" className="flex relative h-full p-0.5 list">
+            {/* Cards remain the same but with responsive text sizing */}
             {/* Card 1 */}
             <div className="w-full h-full absolute inset-0 shadow-md overflow-hidden item">
               <img
@@ -84,7 +86,7 @@ const ScrollingCards = () => {
               <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
                 1
               </span>
-              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+              <h2 className="absolute inset-0 flex items-center justify-center text-4xl sm:text-6xl font-bold text-white drop-shadow-lg">
                 Wild
               </h2>
             </div>
@@ -99,7 +101,7 @@ const ScrollingCards = () => {
               <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
                 2
               </span>
-              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+              <h2 className="absolute inset-0 flex items-center justify-center text-4xl sm:text-6xl font-bold text-white drop-shadow-lg">
                 Cycle
               </h2>
             </div>
@@ -114,7 +116,7 @@ const ScrollingCards = () => {
               <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
                 3
               </span>
-              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+              <h2 className="absolute inset-0 flex items-center justify-center text-4xl sm:text-6xl font-bold text-white drop-shadow-lg">
                 Guard
               </h2>
             </div>
@@ -129,7 +131,7 @@ const ScrollingCards = () => {
               <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
                 4
               </span>
-              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+              <h2 className="absolute inset-0 flex items-center justify-center text-4xl sm:text-6xl font-bold text-white drop-shadow-lg">
                 Astral
               </h2>
             </div>
