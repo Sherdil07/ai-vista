@@ -45,7 +45,7 @@ export default function Partners() {
         overflow: hidden;
         width: 100%;
         background-color: #000;
-        padding: 1.5rem 0;
+        padding: 1rem 0;
       }
       
       .slide-track {
@@ -104,23 +104,64 @@ export default function Partners() {
 
       @media (max-width: 768px) {
         .slider-container {
-          padding: 0.75rem 0; /* Reduced padding on mobile */
+          padding: 0.5rem 0; /* Reduced padding on mobile */
+          margin-top: -11rem; /* Increased negative margin to reduce gap */
+          min-height: 0; /* Prevent excessive height */
         }
         
         .logo-item {
-          padding: 0 12px;
+          padding: 0 10px;
         }
         
         .logo-image {
-          height: 45px; /* Increased height for better readability */
+          height: 50px; /* Balanced height for mobile */
           width: auto;
           max-width: 100%;
-          filter: grayscale(100%) brightness(0.9) opacity(0.85); /* Slightly increased visibility */
+          filter: grayscale(100%) brightness(0.9) opacity(0.85);
         }
         
         .gradient-overlay::before,
         .gradient-overlay::after {
-          width: 60px;
+          width: 50px;
+        }
+      }
+
+      /* Small phones specific styling */
+      @media (max-width: 375px) {
+        .slider-container {
+          margin-top: -2rem; /* Even more negative margin for small phones */
+          padding: 0.25rem 0;
+        }
+        
+        .logo-image {
+          height: 45px; /* Slightly smaller for very small phones */
+        }
+      }
+
+      /* Tablet devices */
+      @media (min-width: 769px) and (max-width: 1023px) {
+        .slider-container {
+          margin-top: -12rem; /* Negative margin for tablets */
+          padding: 0.75rem 0;
+        }
+        
+        .logo-image {
+          height: 55px;
+        }
+      }
+
+      /* Laptops/smaller desktops */
+      @media (min-width: 1024px) and (max-width: 1440px) {
+        .slider-container {
+          margin-top: -1.5rem; /* Slight negative margin for laptops */
+        }
+      }
+      
+      /* Handle landscape orientation specifically */
+      @media (max-width: 768px) and (orientation: landscape) {
+        .slider-container {
+          margin-top: -14rem; /* More negative margin for landscape mobile */
+          padding: 0.25rem 0;
         }
       }
     `;
@@ -148,9 +189,8 @@ export default function Partners() {
 
   // Create an expanded logo array that repeats the logos 3 times for smoother looping
   const expandedLogos = [...logos, ...logos, ...logos];
-
   return (
-    <section className="bg-black md:py-12">
+    <section className="bg-black md:py-8 -mt-6 md:-mt-8 lg:-mt-6">
       <div className="container mx-auto px-4">
         <div className="slider-container gradient-overlay">
           <div
@@ -169,7 +209,7 @@ export default function Partners() {
                   src={logo}
                   alt={`Partner logo ${(index % logos.length) + 1}`}
                   loading="lazy"
-                  className="logo-image h-13 md:h-14"
+                  className="logo-image" // Remove inline height classes
                 />
               </div>
             ))}
