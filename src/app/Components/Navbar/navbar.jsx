@@ -228,12 +228,12 @@ const Navbar = () => {
             </motion.div>
 
             <motion.button
-              className="p-3 rounded-xl relative z-50 pr-1 md:pr-2"
+              className="p-3 rounded-xl relative z-50 pr-1 md:pr-2 w-8 h-8 sm:w-4 sm:h-4" // Modify the size for small screens
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
             >
               <motion.div
-                className="w-8 h-8 relative"
+                className="w-full h-full relative"
                 variants={buttonContainerVariants}
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}

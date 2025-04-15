@@ -1,196 +1,151 @@
 "use client";
-import { useRef, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
-import Heading from "./headingUseCase";
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import AnimatedHeading from "./headingUseCase";
 
-const SpaceCard = ({ i, title, src, color, progress, range, targetScale }) => {
-  const container = useRef(null);
-  const textRef = useRef(null);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "start start"],
-  });
-
-  // Smoother animation transformations
-  const scale = useTransform(progress, range, [1, targetScale]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [150, 0]); // Reduced initial offset
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1]); // Subtler zoom effect
-  const rotate = useTransform(scrollYProgress, [0, 0.5], [5, 0]); // Reduced tilt angle
+const ScrollingCards = () => {
+  const verticalSectionRef = useRef(null);
 
   useEffect(() => {
-    const text = textRef.current;
-    if (!text) return;
+    const verticalSection = verticalSectionRef.current;
 
-    const handleScroll = () => {
-      const rect = container.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const visiblePercentage = Math.max(
-        0,
-        Math.min(1, (windowHeight - rect.top) / windowHeight)
+    if (verticalSection) {
+      initScroll(
+        verticalSection,
+        verticalSection.querySelectorAll(".item"),
+        "vertical"
       );
+    }
 
-      text.style.backgroundSize = `${visiblePercentage * 100}% 100%`;
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const initScroll = (section, items, direction) => {
+    items.forEach((item, index) => {
+      if (index !== 0) {
+        gsap.set(item, { yPercent: 100 });
+      }
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        start: "top top",
+        end: () => `+=${items.length * 100}%`,
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+      defaults: { ease: "none" },
+    });
+
+    items.forEach((item, index) => {
+      timeline.to(item, {
+        scale: 0.9,
+        borderRadius: "10px",
+      });
+
+      timeline.to(items[index + 1], { yPercent: 0 }, "<");
+    });
+  };
+
   return (
-    <div
-      ref={container}
-      className="h-screen flex items-center justify-center sticky top-0"
-    >
-      <motion.div
-        style={{
-          backgroundColor: color,
-          scale,
-          top: `calc(-3vh + ${i * 15}px)`, // Reduced vertical overlap
-          y,
-          rotateX: rotate,
-        }}
-        className="flex flex-col relative w-[95%] sm:w-[92%] md:w-[94%] lg:w-[96%] max-w-3xl rounded-xl overflow-hidden shadow-2xl"
-      >
-        {/* Increased mobile size */}
-        <div className="pb-[80%] sm:pb-[75%] md:pb-[60%] lg:pb-[55%] relative w-full">
-          <div className="absolute inset-0 w-full h-full">
-            <motion.div
-              className="w-full h-full"
-              style={{
-                scale: imageScale,
-                transition: { type: "spring", damping: 15, stiffness: 100 }, // Smoother animation
-              }}
-            >
-              <Image
-                fill
-                src={src}
-                alt={`${title} concept`}
-                className="object-cover object-center"
-                sizes="(max-width: 640px) 95vw, (max-width: 768px) 92vw, (max-width: 1024px) 94vw, 96vw"
-                priority={i === 0} // Prioritize first image load
+    <main className="bg-black text-white">
+      {/* First Section */}
+      <div className="overflow-hidden">
+        <div className="container mx-auto px-10">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="max-w-2xl text-center">
+              <AnimatedHeading />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Vertical Scrolling Section */}
+      <div ref={verticalSectionRef} className="overflow-hidden scroll-section">
+        <div className="h-screen wrapper">
+          <div role="list" className="flex relative h-full p-0.5 list">
+            {/* Card 1 */}
+            <div className="w-full h-full absolute inset-0 shadow-md overflow-hidden item">
+              <img
+                src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                className="absolute inset-0 w-full h-full object-cover"
+                alt="Nature"
               />
-            </motion.div>
-          </div>
+              <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
+                1
+              </span>
+              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+                Wild
+              </h2>
+            </div>
 
-          <div className="absolute top-4 left-4 text-base sm:text-lg font-medium text-white/80">
-            {String(i + 1).padStart(2, "0")}
-          </div>
+            {/* Card 2 */}
+            <div className="w-full h-full absolute inset-0 shadow-md overflow-hidden item">
+              <img
+                src="https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                className="absolute inset-0 w-full h-full object-cover"
+                alt="Nature"
+              />
+              <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
+                2
+              </span>
+              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+                Cycle
+              </h2>
+            </div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex items-center">
-              <span className="text-white mr-2">»</span>
-              <h2
-                ref={textRef}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(90deg, white 0%, white 100%)`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "left",
-                  WebkitBackgroundClip: "text",
-                }}
-              >
-                {title}
+            {/* Card 3 */}
+            <div className="w-full h-full absolute inset-0 shadow-md overflow-hidden item">
+              <img
+                src="https://images.pexels.com/photos/33041/antelope-canyon-lower-canyon-arizona.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                className="absolute inset-0 w-full h-full object-cover"
+                alt="Nature"
+              />
+              <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
+                3
+              </span>
+              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+                Guard
+              </h2>
+            </div>
+
+            {/* Card 4 */}
+            <div className="w-full h-full absolute inset-0 shadow-md overflow-hidden item">
+              <img
+                src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                className="absolute inset-0 w-full h-full object-cover"
+                alt="Nature"
+              />
+              <span className="absolute top-6 left-6 h-12 w-12 bg-black text-white flex items-center justify-center rounded-full z-10 text-2xl font-bold">
+                4
+              </span>
+              <h2 className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white drop-shadow-lg">
+                Astral
               </h2>
             </div>
           </div>
         </div>
-      </motion.div>
-    </div>
-  );
-};
-
-const SpaceThemedCards = () => {
-  const container = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    const titleElement = titleRef.current;
-    const subtitleElement = subtitleRef.current;
-    if (!titleElement || !subtitleElement) return;
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const maxScroll = 300;
-      const progress = Math.min(1, scrollPosition / maxScroll);
-
-      titleElement.style.backgroundSize = `${progress * 100}% 100%`;
-      subtitleElement.style.backgroundSize = `${Math.max(
-        0,
-        (progress - 0.3) * 100
-      )}% 100%`;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const cards = [
-    {
-      title: "BEYOND",
-      src: "/images/ai-cloud-concept-with-robot-hand (1).jpg",
-      color: "#D6336C",
-    },
-    {
-      title: "EXPLORE",
-      src: "/images/digital-design-businessman-show-growth-graph-earning-with-digital-marketing-strategy.jpg",
-      color: "#1E3A8A",
-    },
-    {
-      title: "DISCOVER",
-      src: "/images/Mobile App Dev.jpeg",
-      color: "#5B21B6",
-    },
-  ];
-
-  return (
-    <main ref={container} className="relative z-10 bg-black">
-      {/* Reduced header height and spacing */}
-      <div className="h-[15vh] flex flex-col items-center justify-center text-center space-y-2">
-        <Heading />
-        <div className="mt-1 animate-bounce-slow">
-          <svg
-            className="w-5 h-5 sm:w-6 sm:h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </div>
       </div>
 
-      {cards.map((card, i) => {
-        const targetScale = 1 - (cards.length - i) * 0.04; // Adjusted scale factor
-        return (
-          <SpaceCard
-            key={i}
-            i={i}
-            {...card}
-            progress={scrollYProgress}
-            range={[i * 0.2, 1]} // Adjusted range for smoother transition
-            targetScale={targetScale}
-          />
-        );
-      })}
-
-      <div className="h-screen flex items-center justify-center">
-        {/* Optional footer content */}
+      {/* Final Section */}
+      <div className="overflow-hidden">
+        <div className="px-10">
+          <div className="container mx-auto">
+            <div className="py-8"></div>
+          </div>
+        </div>
       </div>
     </main>
   );
 };
 
-export default SpaceThemedCards;
+export default ScrollingCards;
