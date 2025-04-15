@@ -195,7 +195,7 @@ const ServiceCards = () => {
               // For mobile: Use button with click effect
               <button
                 onClick={handleButtonClick}
-                className={`relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border border-blue-400 rounded-lg transition-colors duration-300 ${
+                className={`relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border border-[#00A8A8] rounded-lg transition-colors duration-300 ${
                   buttonClicked ? "active-btn" : ""
                 }`}
               >
@@ -210,7 +210,7 @@ const ServiceCards = () => {
               // For desktop: Use Link with hover effect
               <Link
                 href="/services"
-                className="relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white  border-[#00A8A8] rounded-lg group hover:border-transparent"
+                className="relative inline-flex items-center gap-3 px-8 py-4 overflow-hidden text-base font-semibold text-white border  border-[#00A8A8] rounded-lg group hover:border-transparent"
               >
                 <span className="relative z-10">All Services</span>
                 <div className="absolute inset-0 w-full h-full -translate-x-full bg-gradient-to-r from-black to-[#00A8A8] transition-transform duration-500 group-hover:translate-x-0" />
