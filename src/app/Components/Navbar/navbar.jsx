@@ -73,8 +73,8 @@ const Navbar = () => {
     },
     closed: (custom) => ({
       opacity: 1,
-      x: (custom % 3) * 16 - 16,
-      y: Math.floor(custom / 3) * 16 - 16,
+      x: (custom % 3) * 12 - 12,
+      y: Math.floor(custom / 3) * 12 - 12,
       scale: 1,
       transition: {
         duration: 0.5,
@@ -228,12 +228,12 @@ const Navbar = () => {
             </motion.div>
 
             <motion.button
-              className="p-3 rounded-xl relative z-50 pr-1 md:pr-2 w-8 h-8 sm:w-4 sm:h-4" // Modify the size for small screens
+              className="p-2 rounded-xl relative z-50 pr-1 md:pr-2"
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
             >
               <motion.div
-                className="w-full h-full relative"
+                className="w-6 h-6 md:w-8 md:h-8 relative"
                 variants={buttonContainerVariants}
                 initial="closed"
                 animate={isOpen ? "open" : "closed"}
@@ -241,7 +241,7 @@ const Navbar = () => {
                 {[...Array(9)].map((_, i) => (
                   <motion.span
                     key={`dot-${i}`}
-                    className="absolute w-1.5 h-1.5 bg-white rounded-full"
+                    className="absolute w-[3px] h-[3px] md:w-1.5 md:h-1.5 bg-white rounded-full"
                     custom={i}
                     variants={dotVariants}
                     initial="closed"
@@ -249,8 +249,8 @@ const Navbar = () => {
                     style={{
                       left: "50%",
                       top: "50%",
-                      marginLeft: "-0.1875rem",
-                      marginTop: "-0.1875rem",
+                      marginLeft: "-0.09375rem",
+                      marginTop: "-0.09375rem",
                     }}
                   />
                 ))}
