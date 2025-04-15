@@ -18,11 +18,11 @@ export default function Partners() {
     // Function to update animation duration based on screen width - FASTER SPEEDS
     const updateAnimationSpeed = () => {
       if (window.innerWidth <= 768) {
-        setAnimationDuration(8); // Much faster for mobile (was 15)
+        setAnimationDuration(8); // Fast for mobile
       } else if (window.innerWidth <= 1024) {
-        setAnimationDuration(12); // Faster for tablets (was 25)
+        setAnimationDuration(12); // Fast for tablets
       } else {
-        setAnimationDuration(15); // Faster for desktop (was 35)
+        setAnimationDuration(15); // Fast for desktop
       }
     };
 
@@ -45,7 +45,7 @@ export default function Partners() {
         overflow: hidden;
         width: 100%;
         background-color: #000;
-        padding: 2rem 0;
+        padding: 1.5rem 0;
       }
       
       .slide-track {
@@ -72,6 +72,8 @@ export default function Partners() {
       .logo-image {
         transition: all 0.3s ease;
         filter: grayscale(100%) brightness(0.8) opacity(0.7);
+        object-fit: contain; /* Prevent image distortion */
+        max-width: 100%;
       }
       
       .logo-image:hover {
@@ -101,14 +103,18 @@ export default function Partners() {
       }
 
       @media (max-width: 768px) {
+        .slider-container {
+          padding: 0.75rem 0; /* Reduced padding on mobile */
+        }
+        
         .logo-item {
           padding: 0 10px;
         }
         
         .logo-image {
-          height: 9vw;
-          max-height: 40px;
-          min-height: 28px;
+          height: 32px; /* Fixed height instead of viewport-based */
+          width: auto;
+          max-width: 100%;
         }
         
         .gradient-overlay::before,
@@ -143,7 +149,7 @@ export default function Partners() {
   const expandedLogos = [...logos, ...logos, ...logos];
 
   return (
-    <section className="bg-black py-8 md:py-16">
+    <section className="bg-black py-4 md:py-12">
       <div className="container mx-auto px-4">
         <div className="slider-container gradient-overlay">
           <div
@@ -162,7 +168,7 @@ export default function Partners() {
                   src={logo}
                   alt={`Partner logo ${(index % logos.length) + 1}`}
                   loading="lazy"
-                  className="logo-image h-12 md:h-14"
+                  className="logo-image h-10 md:h-14"
                 />
               </div>
             ))}
