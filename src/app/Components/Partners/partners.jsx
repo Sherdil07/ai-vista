@@ -15,7 +15,7 @@ export default function Partners() {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    // Function to update animation duration based on screen width - FASTER SPEEDS
+    // Function to update animation duration based on screen width
     const updateAnimationSpeed = () => {
       if (window.innerWidth <= 768) {
         setAnimationDuration(8); // Fast for mobile
@@ -74,6 +74,8 @@ export default function Partners() {
         filter: grayscale(100%) brightness(0.8) opacity(0.7);
         object-fit: contain; /* Prevent image distortion */
         max-width: 100%;
+        height: 100px; /* Default height for desktop */
+        width: auto;
       }
       
       .logo-image:hover {
@@ -102,19 +104,19 @@ export default function Partners() {
         background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
       }
 
+      /* Mobile devices */
       @media (max-width: 768px) {
         .slider-container {
-          padding: 0.5rem 0; /* Reduced padding on mobile */
-          margin-top: -11rem; /* Increased negative margin to reduce gap */
-          min-height: 0; /* Prevent excessive height */
+          padding: 0.75rem 0; 
+          margin-top: -15rem; /* Increased negative margin to reduce gap */
         }
         
         .logo-item {
-          padding: 0 10px;
+          padding: 0 15px;
         }
         
         .logo-image {
-          height: 80px !important; /* Balanced height for mobile */
+          height: 100px !important; /* Increased height for better visibility on mobile */
           width: auto;
           max-width: 100%;
           filter: grayscale(100%) brightness(0.9) opacity(0.85);
@@ -129,24 +131,36 @@ export default function Partners() {
       /* Small phones specific styling */
       @media (max-width: 375px) {
         .slider-container {
-          margin-top: -2rem; /* Even more negative margin for small phones */
-          padding: 0.25rem 0;
+          margin-top: -3rem; /* Adjusted margin for small phones */
+          padding: 0.5rem 0;
         }
         
         .logo-image {
-          height: 55px !important; /* Slightly smaller for very small phones */
+          height: 80px !important; /* Increased from 55px for better visibility */
         }
       }
 
-      /* Tablet devices */
-      @media (min-width: 769px) and (max-width: 1023px) {
+      /* iPad Mini */
+      @media (min-width: 768px) and (max-width: 834px) {
         .slider-container {
-          margin-top: -12rem; /* Negative margin for tablets */
-          padding: 0.75rem 0;
+          margin-top: -15rem; /* Increased negative margin for iPad Mini */
+          padding: 1rem 0;
         }
         
         .logo-image {
-          height: 65px !important;
+          height: 90px !important;
+        }
+      }
+
+      /* iPad Pro */
+      @media (min-width: 834px) and (max-width: 1024px) {
+        .slider-container {
+          margin-top: -18rem; /* Increased negative margin for iPad Pro */
+          padding: 1rem 0;
+        }
+        
+        .logo-image {
+          height: 100px !important;
         }
       }
 
@@ -155,19 +169,27 @@ export default function Partners() {
         .slider-container {
           margin-top: -1.5rem; /* Slight negative margin for laptops */
         }
+        
+        .logo-image {
+          height: 110px;
+        }
       }
       
       /* Handle landscape orientation specifically */
       @media (max-width: 768px) and (orientation: landscape) {
         .slider-container {
-          margin-top: -14rem; /* More negative margin for landscape mobile */
-          padding: 0.25rem 0;
+          margin-top: -14rem;
+          padding: 0.5rem 0;
+        }
+        
+        .logo-image {
+          height: 90px !important;
         }
       }
     `;
     document.head.appendChild(style);
 
-    // Remove visibility transition events to prevent animation stuttering
+    // Handle visibility changes to prevent animation stuttering
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setIsPaused(true);
@@ -189,6 +211,7 @@ export default function Partners() {
 
   // Create an expanded logo array that repeats the logos 3 times for smoother looping
   const expandedLogos = [...logos, ...logos, ...logos];
+
   return (
     <section className="bg-black md:py-8 -mt-6 md:-mt-8 lg:-mt-6">
       <div className="container mx-auto px-4">
@@ -209,7 +232,7 @@ export default function Partners() {
                   src={logo}
                   alt={`Partner logo ${(index % logos.length) + 1}`}
                   loading="lazy"
-                  className="logo-image" // Remove inline height classes
+                  className="logo-image"
                 />
               </div>
             ))}
